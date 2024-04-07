@@ -10,27 +10,28 @@
 
 ### ES6
 
- - The let keyword
+ - The **let** and **const** keywords
 
- - The const keyword
+ - **Arrow Functions** : (a, b) => {return a+b;}. 
+       a) It cannot be used as object constructor
+       b) There is no arguments pseudo-array
+       c) apply | bind | call is make NO sense => **this** wiil not be pass to arrow function
 
- - Arrow Functions
+ - **Map** : Any value (both objects and primitive values) may be used as either a key or a value.
 
- - Map Objects
+ - **WeakMap** : A WeakMap is a collection of key/value pairs whose keys must be objects or non-registered symbols, 
+                 with values of any arbitrary JavaScript type, and which does not create strong references to its keys.
+                 That is, an object's presence as a key in a WeakMap does not prevent the object from being garbage collected. 
 
- - Set Objects
+ - **Set** : The Set object lets you store **unique** values of any type, whether primitive values or object references.
 
- - Classes
+ - **WeakSet** : A WeakSet is a collection of garbage-collectable values, including objects and non-registered symbols. 
 
- - Promises
+ - **Symbol** : Symbol is a built-in object whose constructor returns a symbol primitive, that's guaranteed to be unique
 
- - **Symbol**
+ - **Default Parameters** :  ```function multiply(a, b = 1)```
 
- - Default Parameters
-
- - Function Rest Parameter
-
- - String.includes()  
+ - **String.includes()** : performs a case-sensitive search to determine whether a given string may be found within this string. return true/false
  
  - **String.startsWith(searchString, startPosition)**
  
@@ -38,28 +39,37 @@
 
  - Array.from()  keys()  find() findIndex()
 
- - New Math Methods
+ - **New Math Methods** : Math.trunc()  Math.sign()   Math.cbrt()  Math.log2()  Math.log10()
 
- - New Number Properties
+ - **New Number Properties**:  Number.EPSILON, Number.MAX_VALUE, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY...
 
- - New Number Methods
+ - **New Number Methods** : isFinite  isInteger  isSafeInteger;  
+                            Safe integers consist of all integers from -(2^53 - 1) to 2^53 - 1
 
- - New Global Methods
-
- - Object entries
-
- - JavaScript Modules
+ - **Object.entries()** : returns an array of a given object's own enumerable string-keyed property key-value pairs.
 
  - **Array and Object destructing**
 
- - The ... Operator
+ - **Rest** Parameter for function: Allows a function to accept an indefinite number of arguments as an array, 
+                                    providing a way to represent variadic functions in JavaScript.
 
- - For/of
+ - The ... (**spread**) :  spread syntax is the opposite of rest syntax. Spread syntax "expands" an array into its elements, 
+                           while rest syntax collects multiple elements and "condenses" them into a single element.
 
  - **Iterator** : is an object that conforms to the iterator protocol by providing a next() method that returns an iterator result object.
 
  - **Generator** : object is returned by a generator function and it conforms to both the iterable protocol and the iterator protocol. 
                    Generator is a subclass of the hidden Iterator class.
+
+ - **For/of** : The for...of statement executes a loop that operates on a sequence of values sourced from an **iterable object.**
+
+ - **JavaScript Modules**  :  export =>  export class Car...   export { Car };  export { Car as CarExported} ; 
+                              import =>  import * as numbers from "car.js" : export all from module car.js
+                              Default export/import:  export default { Car } =>  import Car from "car.js" (without braces)
+
+ - Classes
+
+ - Promises
 
 
 ### ES2016
@@ -81,7 +91,7 @@
  
  - **Object.values()** :  returns an array of a given object's own enumerable string-keyed property values.
 
- - async and await
+ - **async and await** : to simplify asynchronous code, it makes the code look and behave more like synchronous code
 
  - **Trailing Commas in Functions:**  Trailing commas (sometimes called "final commas") can be useful when adding new elements,
     parameters, or properties to JavaScript code. If you want to add a new property, you can add a new line without modifying 
@@ -94,15 +104,23 @@
 
 ### ES2018
 
- - Asynchronous Iteration
+ - **Asynchronous Iteration** : ```for await () {} ```
 
  - Promise Finally
 
- - Object Rest Properties
+ - **Object Rest Properties** : This allows us to destruct an object and collect the leftovers onto a new object
+      
+      ```
+      let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+      x; // 1  y; // 2  z; // { a: 3, b: 4 }
+
+      ```
 
  - **New RegExp Features**
 
- - JavaScript Shared Memory
+ - **JavaScript Shared Memory** : Shared memory is a feature that allows threads (different parts of a program) to access and update the same
+                                  data in the same memory. Instead of passing data between threads, you can pass a SharedArrayBuffer 
+                                  object that points to the memory where data is saved.
 
 
 ### ES2019
@@ -113,17 +131,26 @@
 
  - **Object.fromEntries** : transforms a list of key-value pairs into an object
 
- - Optional catch binding
+ - **Optional catch binding** : From ES2019 you can omit the catch parameter if you don't need it: 
+   
+   ```
+   try {
+      // code
+   } catch {
+      // code
+   }
+
+   ```
 
  - **Array.flat([depth])** : creates a new array with all sub-array elements concatenated into it recursively up to the specified depth
 
  - **Array.flatMap()** :  It is identical to a map() followed by a flat() of depth 1  ```(arr.map(...args).flat())```
 
- - Revised Array.Sort()
+ - **Revised Array.Sort()** : After ES2019, browsers must use a **stable sorting algorithm**
 
  - **Revised JSON.stringify()** :  Well-formed JSON.stringify: JSON.stringify('\u{D800}')
 
- - Separator symbols allowed in string litterals
+ - **Separator symbols allowed in string litterals** : // This is valid in ES2019: let text = "\u2028";
 
  - **Revised Function.toString()** : From 2019, toString() must return the source code of the function **including comments, spaces, and syntax details**.
 
@@ -160,9 +187,12 @@
 
 ### ES2022
 
-  - Array at()
+  - **Array at()** : The at() method of Array instances takes an integer value and returns the item at that index, allowing for 
+                     positive and negative integers. Negative integers count back from the last item in the array.
 
-  - String at()
+  - **String at()** : The at() method of String values takes an integer value and returns a new String consisting of the 
+                      single UTF-16 code unit located at the specified offset. This method allows for positive and negative integers. 
+                      Negative integers count back from the last string character.
 
   - RegExp /d
 

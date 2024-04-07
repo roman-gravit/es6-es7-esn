@@ -1,2 +1,5 @@
-let message: string = 'Hello World';
-console.log(message);
+export { sum }; 
+
+function sum(a: number, b: number): number {
+	return a + b;
+}
