@@ -63,7 +63,7 @@
 
  - Exponentiation assignment (**=)
 
- - Array includes()
+ - **Array.includes(searchElement, fromIndex)** : determines whether an array includes a certain value among its entries, returning true or false as appropriate.
 
 
 ### ES2017
@@ -72,7 +72,9 @@
  
  - **String.padEnd()** :    ``` "abc".padEnd(10); // "abc       "  ```
 
- - Object entries() and Object values()
+ - **Object.entries()** : returns an array of a given object's own enumerable string-keyed property key-value pairs
+ 
+ - **Object.values()** :  returns an array of a given object's own enumerable string-keyed property values.
 
  - async and await
 
@@ -81,7 +83,8 @@
     the previously last line if that line already uses a trailing comma. This makes version-control diffs cleaner and editing 
     code might be less troublesome.
 
- - Object.getOwnPropertyDescriptors
+ - **Object.getOwnPropertyDescriptors** :   returns all own property descriptors of a given object.
+      Use this method and Object.create() for a shallow copy between two unknown objects.
 
 
 ### ES2018
@@ -92,7 +95,7 @@
 
  - Object Rest Properties
 
- - New RegExp Features
+ - **New RegExp Features**
 
  - JavaScript Shared Memory
 
@@ -103,13 +106,13 @@
  
  - **String.trimEnd()** : removes whitespace from the end of this string and returns a new string
 
- - Object.fromEntries
+ - **Object.fromEntries** : transforms a list of key-value pairs into an object
 
  - Optional catch binding
 
- - Array.flat()
+ - **Array.flat([depth])** : creates a new array with all sub-array elements concatenated into it recursively up to the specified depth
 
- - Array.flatMap()
+ - **Array.flatMap()** :  It is identical to a map() followed by a flat() of depth 1  ```(arr.map(...args).flat())```
 
  - Revised Array.Sort()
 
@@ -147,7 +150,7 @@
 
  - String replaceAll()
 
- - Numeric Separators (_)
+ - **Numeric Separators (_)** : 1_000_000
 
 
 ### ES2022
@@ -238,7 +241,7 @@ In JavaScript, a variable can be declared after it has been used.
   NOTE1: JavaScript only hoists declarations, not initializations.
 
 
-## Symbol 
+##  Symbol 
 
 Symbol is a built-in object whose constructor returns a symbol primitive — also called a Symbol value or just a Symbol 
 — that's guaranteed to be unique. Symbols are often used to add unique property keys to an object that won't 
@@ -315,7 +318,7 @@ the function name, which can be omitted in function expressions to create anonym
    - null: definite set the the value is null (typeof null=='object')
 
 
-##   What is ES6 modules 
+##  What is ES6 modules 
 
 Approach to organize JS code for more convinient work and to maintain the clean global scope of the app.
 Main two things:   

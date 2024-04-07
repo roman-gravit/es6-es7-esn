@@ -17,7 +17,7 @@ test("string padStart", () => {
 //  pads this string with a given string (repeated, if needed)
 //  so that the resulting string reaches a given length. The padding is applied from the end of this string.
 
-test("string padStart", () => {
+test("string padEnd", () => {
 	{
 		expect("abc".padEnd(10)).toEqual("abc       ");
 		expect("abc".padEnd(10, "foo")).toEqual("abcfoofoof");
