@@ -16,10 +16,6 @@
 
  - Arrow Functions
 
- - The ... Operator
-
- - For/of
-
  - Map Objects
 
  - Set Objects
@@ -55,6 +51,15 @@
  - JavaScript Modules
 
  - **Array and Object destructing**
+
+ - The ... Operator
+
+ - For/of
+
+ - **Iterator** : is an object that conforms to the iterator protocol by providing a next() method that returns an iterator result object.
+
+ - **Generator** : object is returned by a generator function and it conforms to both the iterable protocol and the iterator protocol. 
+                   Generator is a subclass of the hidden Iterator class.
 
 
 ### ES2016
