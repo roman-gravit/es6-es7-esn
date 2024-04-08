@@ -54,6 +54,44 @@
 */
 
 
+test("async-await", async () => {
+
+	{
+		const fetchText = () => new Promise(resolve => {
+			setTimeout(()=> {
+				resolve("Hello");
+			}, 1000)
+		});
+	
+	
+		const showText = async() => {
+			const text: any = await fetchText();
+			expect(text.toString()).toEqual("Hello");
+		}
+	
+		showText();
+	}
+
+	{
+
+		const fetchText = () => new Promise(resolve => {
+			setTimeout(()=> {
+				resolve("Hello");
+			}, 1000)
+		});
+	
+	
+		const showText = () => {
+			const text = fetchText();
+			expect(text.toString()).toEqual("[object Promise]");
+		}
+	
+		showText();
+
+	}
+
+});
+
 // The then() method of Promise instances takes up to two arguments: 
 // callback functions for the fulfilled and rejected cases of the Promise. 
 test("promise.then", async () => {
@@ -130,7 +168,7 @@ test("promise.finally", async () => {
 		  	if (Math.random() > 0.5) {
 				resolve('Mail has arrived');
 		  	} else {
-				reject(new Error('Failed to arrive'));
+				reject('Failed to arrive');
 		  	}
 		});
 	}
@@ -184,6 +222,9 @@ test("promise.finally", async () => {
 
 		// New promise created from that promise with the then() is not. 
 		// There's nothing in that chain that is able to handle the error so it is seen as unhandled.
+
+		// ALSO: Simply, handled errors are not recognized at the error level, rather they're seen at the promise level. 
+		// it cannot be handled via common try - catch
 		const p1 = p.then((data) => {
 			console.log('ok:' + data);
 		});
@@ -571,6 +612,7 @@ test("promise.all", async () => {
 
 test("promise", async () => {
 
+	
 	const res = await PromiseConstructor();
 	expect(res).toEqual("start1end");
 

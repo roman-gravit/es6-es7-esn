@@ -159,22 +159,25 @@
 
  - BigInt
 
- - String matchAll()
+ - String.matchAll()
 
- - The Nullish Coalescing Operator (??)
+ - **The Nullish Coalescing Operator (??)** :  returns its right-hand side operand when its left-hand side operand is null or undefined, 
+                                               and otherwise returns its left-hand side operand.
 
- - The Optional Chaining Operator (?.)
+ - **The Optional Chaining Operator (?.)** : accesses an object's property or calls a function. If the object accessed or function called using this operator 
+                                             is undefined or null, the expression short circuits and evaluates to undefined instead of throwing an error.
 
- - Logical AND Assignment Operator (&&=)
+ - **Nullish Coalescing Assignment (??=)** : only evaluates the right operand and assigns to the left if the left operand is nullish (null or undefined).
 
- - Logical OR Assignment (||=)
+ - **Logical AND Assignment Operator (&&=)** : only evaluates the right operand and assigns to the left if the left operand is truthy.
 
- - Nullish Coalescing Assignment (??=)
+ - **Logical OR Assignment (||=)** : only evaluates the right operand and assigns to the left if the left operand is falsy.
+
 
  - **Promise.allSettled()** : This returned promise fulfills when all of the input's promises settle (including when an empty iterable is passed), 
                               with an array of objects that describe the outcome of each promise.
 
- - Dynamic Import
+ - **Dynamic Import**  : import(path).then  or  await import(path)
 
 
 ### ES2021
@@ -205,7 +208,7 @@
 
   - error.cause
 
-  - await import
+  - **await import** : await import(path), dynamic import
 
   - Class field declarations
 
