@@ -69,14 +69,14 @@
 
  - Classes
 
- - Promises
+ - **Promises**
 
 
 ### ES2016
 
- - Exponentiation ```**```      **Was:**  ```Math.pow(7,2)```   **Now:** ```7**2```
+ - **Exponentiation** :   ```**```      **Was:**  ```Math.pow(7,2)```   **Now:** ```7**2```
 
- - Exponentiation assignment (**=)
+ - **Exponentiation assignment** : (**=)
 
  - **Array.includes(searchElement, fromIndex)** : determines whether an array includes a certain value among its entries, returning true or false as appropriate.
 
@@ -94,19 +94,19 @@
  - **async and await** : to simplify asynchronous code, it makes the code look and behave more like synchronous code
 
  - **Trailing Commas in Functions:**  Trailing commas (sometimes called "final commas") can be useful when adding new elements,
-    parameters, or properties to JavaScript code. If you want to add a new property, you can add a new line without modifying 
-    the previously last line if that line already uses a trailing comma. This makes version-control diffs cleaner and editing 
-    code might be less troublesome.
+                parameters, or properties to JavaScript code. If you want to add a new property, you can add a new line without modifying 
+                the previously last line if that line already uses a trailing comma. This makes version-control diffs cleaner and editing 
+                code might be less troublesome.
 
  - **Object.getOwnPropertyDescriptors** :   returns all own property descriptors of a given object.
-      Use this method and Object.create() for a shallow copy between two unknown objects.
+                                            Use this method and Object.create() for a shallow copy between two unknown objects.
 
 
 ### ES2018
 
  - **Asynchronous Iteration** : ```for await () {} ```
 
- - Promise Finally
+ - **Promise Finally**  : schedules a function to be called when the promise is settled (either fulfilled or rejected)
 
  - **Object Rest Properties** : This allows us to destruct an object and collect the leftovers onto a new object
       
@@ -171,16 +171,21 @@
 
  - Nullish Coalescing Assignment (??=)
 
- - Promise.allSettled()
+ - **Promise.allSettled()** : This returned promise fulfills when all of the input's promises settle (including when an empty iterable is passed), 
+                              with an array of objects that describe the outcome of each promise.
 
  - Dynamic Import
 
 
 ### ES2021
 
- - Promise.any()
+ - **Promise.any()** : This method is useful for returning the first promise that fulfills. 
+                       fulfills with the first promise to fulfill, even if a promise rejects first.
+                       This returned promise fulfills when any of the input's promises fulfills, with this first fulfillment value.
+                       It rejects when all of the input's promises reject (including when an empty iterable is passed), 
+                       with an AggregateError containing an array of rejection reasons.
 
- - String replaceAll()
+ - **String.replaceAll()** : The replaceAll() method of String values returns a new string with all matches of a pattern replaced by a replacement
 
  - **Numeric Separators (_)** : 1_000_000
 
