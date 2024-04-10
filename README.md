@@ -67,7 +67,7 @@
                               import =>  import * as numbers from "car.js" : export all from module car.js
                               Default export/import:  export default { Car } =>  import Car from "car.js" (without braces)
 
- - Classes
+ - **Classes**
 
  - **Promises**
 
@@ -222,6 +222,12 @@
   - #! (Shebang)
 
 
+##  What is ECMAScript
+
+Specification(standart) of the scripting language, rules, recomndetations.
+
+What the difference between JavaScript and ECMAScript: JavaScript is one of the versions of the script language which accords to EMCAScript.
+
 
 ##  JS scope 
 
@@ -350,6 +356,18 @@ the function name, which can be omitted in function expressions to create anonym
  - Expression: - create a function expression and MUST assign it to a variable that can be called. 
      const sum  = function(a, b) { return a+b; }
      const sum2  = (a, b) => { a+b;}  Arrow function expressions
+ 
+ - Named Function Expression
+	 It allows the function to reference itself internally.
+	 It is not visible outside of the function.
+
+   ```
+	var func = function sum(a, b) {
+		sum(1+2);
+		return a+b;
+	}
+   ```
+
 
    NOTE: Function expressions in JavaScript are NOT HOISTED. 
          You can't use function expressions before you create them!
@@ -376,3 +394,157 @@ Main two things:
 https://habr.com/ru/companies/ruvds/articles/492510/  [2020]   
 
 https://habr.com/ru/companies/netologyru/articles/351704/ [2018]
+
+
+##  Arrays
+
+ - forEach  (callback(element, index, array))   Unmatable
+
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+    	- You can do action on each element
+
+	Return: 
+		- undefined 
+
+
+-  map  (callback(element, index, array))       Unmatable
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+	      Return value from the callback - it will be pushed to the result array.
+
+	Return: 
+		- result Array 
+
+
+-  filter  (callback(element, index, array))       Unmatable
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+	      Return value from the callback: must be predicate (true/false)
+	      True: include element to the result array
+	      False: do NOT include element to the result array
+
+	Return: 
+		- filtered Array 
+
+
+-  every  (callback(element, index, array))       Unmatable
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+	      Return value from the callback: must be predicate (true/false)
+	  	  If at least ONE iteration returns false - result will be false.
+
+	Return: 
+		- boolean 
+
+
+- some  (callback(element, index, array))       Unmatable
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+	 	  Return value from the callback: must be predicate (true/false)
+	 	  If at least ONE iteration returns true - result will be true.
+
+	Return: 
+		- boolean 
+
+
+- reduce  (callback(acc, element, index, array), initial)       Unmatable
+
+	- initial: initital value of any type. Default: first element of the array
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+	  	  On each iteration need to do actions with acc and return it.
+
+	Return: 
+		- acc 
+
+
+-  reduceRight  (callback(acc, element, index, array), initial)       Unmatable
+
+    START from end of the array.
+    - initial: initital value of any type. Default: first element of the array
+
+	Action:
+		- Iterate each element of the array. For each element it will call the callback function. 
+		  On each iteration need to do actions with acc and return it.
+
+	Return: 
+		- acc 
+
+
+##  Difference between forEach and map
+
+   forEach - executes a provided function once for each array element
+	          return UNDEFINED
+	map     - executes a provided function once for each array element
+	          returns new array with each element being the result of the callback function.
+
+
+##  Pseudo array function arguments
+
+	Every function has *arguments*, but it has only *length* property.
+	Because  *arguments* its simply Object with values and propertry *length*.
+	You can convert to array via spread operator:  [...argumnets]
+	ARROW functions do NOT have arguments.
+
+
+##  this and Execution Context
+
+There are three kinds of Execution Context in JavaScript:
+
+   - Global Execution Context (GEC): The global execution context is created when a JavaScript script 
+                                     first starts to run, and it represents the global scope in JavaScript. 
+
+   - Function Execution Context (FEC). When the function is called the function context is created.
+   
+   - eval 
+  
+   *this*  depends on the context. 
+   In the GEC  *this* is the ref to the *window*.
+ 
+
+   *this*  is the object before *.*  
+   Function will work with the context in which it was called.
+   If context was lost - *this* will be global object or undfefined('use strict' is On)
+
+##  Difference between regular and arrow functions
+
+  - *this* for arrow is always taken from parent context, it will not create its own context
+  
+  - arrow function cannot be used as a constructor
+  
+  - arrow has no arguments property
+  
+ - can be used as class methods, and can be called as callbacks.
+ 
+In this case *this* will not be lost:
+
+  ```
+  class Person {
+	  age: 42, 
+	  getAge = () => {
+	      return this.age;	
+	  }
+  }	  
+  const person = new Person();
+  setTimeout(person.getAge, 1000); /// 42
+  ```
+
+   
+##  Diff between Object.freeze() and const
+   
+   - const:  just const the reference. 
+   
+   - Freeze:  tottally freeze the object ( make immutable)
+
+##  What is generator
+   
+Add *  before the function name. Add yield to the for loop inside the function body.
+
+After the first call function will return generator(iterator) with the *next* method. 
