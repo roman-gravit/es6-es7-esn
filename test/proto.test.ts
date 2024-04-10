@@ -1,6 +1,7 @@
 
 // 1) __proto__
 //    __proto__(legacy) OR [[Prototype]] has EVERY object.
+//     __proto__ is get/set of [[Prototype]] property
 //    Can get via Object.getPrototypeOf(obj)
 //    Objects of the same type has the same __proto__.
 //    __proto__ is ref to from which class current object was created ( new Array | new Object | new Boolean...)
