@@ -548,3 +548,11 @@ In this case *this* will not be lost:
 Add *  before the function name. Add yield to the for loop inside the function body.
 
 After the first call function will return generator(iterator) with the *next* method. 
+
+## Prototype inheritence
+
+https://habr.com/ru/companies/otus/articles/685528/
+
+https://habr.com/ru/companies/ruvds/articles/554288/
+
+https://www.youtube.com/watch?v=b55hiUlhAzI
