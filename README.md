@@ -236,19 +236,19 @@ What the difference between JavaScript and ECMAScript: JavaScript is one of the 
 Before ES6 (2015), JavaScript variables had only Global Scope and Function Scope.
 ES6 introduced two important new JavaScript keywords: **let** and **const**
 
-   - Block scope
-	    Variables declared inside a { } block cannot be accessed from outside the block.
-	    Variables declared with the **var** keyword can NOT have block scope.
+ - **Block scope**
+	   Variables declared inside a { } block cannot be accessed from outside the block.
+	   Variables declared with the **var** keyword can NOT have block scope.
 
-   - Function(local) scope
+ - **Function(local) scope**
 		Variables declared within a JavaScript function, are local to the function.
 		
 		They can only be accessed from within the function. Each function creates a new scope.
 		
 		Variables defined inside a function are NOT accessible (visible) from OUTSIDE THE FUNCTION.
 
-   - Global scope
-        A variable declared outside a function, becomes GLOBAL. In HTML, the global scope is the **window** object.
+ - **Global scope**
+      A variable declared outside a function, becomes GLOBAL. In HTML, the global scope is the **window** object.
 		
 		Global variables defined with the **var** keyword belong to the **window** object.
 		
@@ -262,8 +262,8 @@ NOTE:  Automatically Global:
 	   function myFunction() {
 	    	carName = "Volvo";
 	   }
-	   ```
-
+	   
+      ```
 
 In "Strict Mode", undeclared variables are NOT automatically global.
 
@@ -357,6 +357,37 @@ In JavaScript, a variable can be declared after it has been used.
 Note: JavaScript only hoists declarations, not initializations.
 
 
+### Closure
+
+A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). 
+
+In other words, a closure gives you access to an outer function's scope from an inner function. 
+
+In JavaScript, closures are created every time a function is created, at function creation time.
+
+   ```
+   function init() {
+      var name = "Mozilla"; // name is a local variable created by init
+      function displayName() {
+         // displayName() is the inner function, that forms the closure
+         console.log(name); // use variable declared in the parent function
+      }
+      displayName();
+   }
+   init();
+
+   ```
+init() creates a local variable called name and a function called displayName(). 
+
+The displayName() function is an inner function that is defined inside init() and is available only within 
+
+the body of the init() function. Note that the displayName() function has no local variables of its own. 
+
+However, since inner functions have access to the variables of outer functions, 
+
+displayName() can access the variable name declared in the parent function, init().
+
+
 ###  this and Execution Context
 
 There are three kinds of Execution Context in JavaScript:
@@ -372,7 +403,7 @@ There are three kinds of Execution Context in JavaScript:
    In the GEC  *this* is the ref to the *window*.
  
 
-   *this*  is the object before *.*  
+   *this*  is the object before *.*   This is reference to object in which current function was invoked.
    Function will work with the context in which it was called.
    If context was lost - *this* will be global object or undfefined('use strict' is On)
 
@@ -385,14 +416,14 @@ There are three kinds of Execution Context in JavaScript:
 
 Problem: loss the context of the called function. Solved with:
 
- - call    function.call(context(this), param1, param2)
+ - **call**    function.call(context(this), param1, param2)
 
- - apply   function.apply(context(this), [param1, param2])
+ - **apply**   function.apply(context(this), [param1, param2])
  
- - bind    let call = function.bind(context(this), param1, param2) - it will create 
-			  another function-proxy which can be assigned to varibale and call later
+ - **bind**    let call = function.bind(context(this), param1, param2) - it will create 
+			      another function-proxy which can be assigned to varibale and call later
 	
-	*this* inside the context of the function
+*this* inside the context of the function
 
 
 ###  What is ES6 modules 
@@ -499,11 +530,11 @@ Highly recommended to add strict mode:
 
 ###  Whats is !! (double negotiation) 
 
-it can be used to CONVERT a value to a boolean. The second approach is to use Boolean(...)
+it can be used to *convert* a value to a boolean. The second approach is to use Boolean(...)
     
 Using the double negation operator is functionally equivalent to using the Boolean() function.
     
-*falsy*:   0.0 |  undefined |  NaN  | null  |  ""  |  false    => ALWAYS false
+*falsy*:   0 |  undefined |  NaN  | null  |  ""  |  false    => ALWAYS false
 
 
 ###  Difference between null and undefined
@@ -617,7 +648,7 @@ the function name, which can be omitted in function expressions to create anonym
 
 ###  What is Higher Order Functions
 
-Which return other function OR function as input parameter.
+Which return other function OR take function as input parameter.
 
 
 ###  What is clean function
@@ -650,6 +681,19 @@ In this case *this* will not be lost:
   setTimeout(person.getAge, 1000); /// 42
   ```
 
+###  IIFE 
+
+An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
+Avoid polluting the global namespace.
+
+
+   ```
+   (function () {
+   // …
+   })();
+
+   ```
+
 ###  function: pseudo array arguments
 
 	Every function has *arguments*, but it has only *length* property.
@@ -661,6 +705,11 @@ In this case *this* will not be lost:
 ###  How parameters passed to functions
 
 Always *by value*, BUT  for objects the value passed is the value of the reference
+
+###  Why in JS the function is called as the *first-class* objects
+
+We can use function and pass as other simple object or variable. 
+The main difference of the function is - function can be called and return result.
 
 
 ###  Types of timers in JS
@@ -847,11 +896,20 @@ Objects compared by reference. References(address in memory) are different for d
  - DEEP COPY: After change the original object - copy will NOT change.
     ``` {...original} | Object.assign(null, original) | JSON.parse(JSON.stringify(original)) ```
 
-###  Whats function call chaining
+###  What is function call chaining
 
 Object methods are called after each other => ```calculator.add(1).divide(2).add(3)```
 
 Return *this* from the method.
+
+
+### How to determine if property exists
+
+ - obj.hasOwnProperty('string')
+
+ - Operator **in**     ``` console.log("string" in obj) ```
+
+ - obj['string']  
 
 
 
@@ -873,7 +931,8 @@ Propagation refers to how events travel through the Document Object Model (DOM) 
 Propogates from window to the called element and event will *touched* all the parents of the called element. 
 
 Three phases of the event Propogation:
- - 1. Capture phase (from root to target element)
+
+ - 1. Capture phase (from root(window) to target element)
  
  - 2. Target (event reaches the target element)
  
@@ -889,12 +948,13 @@ Use the event.target and delegate the changes to it.
 
 ###  Difference between e.preventDefault and e.stopPropogation
 
- - preventDefault: stop(cancel) the  event for the elelent
+ - preventDefault: stop(cancel) the event behaviour for the element
    
  - stopPropogation: cancel the bubbling of the event
 
 
 ###  Methods of search the elements in DOM
+
  - getElementById
  
  - getElementsByName
@@ -1033,7 +1093,7 @@ https://www.youtube.com/watch?v=rhvec8cXLlo
 
 Hypertext markup language. Formatted text which will be interpreted by browser. This is the skeleton of the webpage,
     
-NOTE1: First browser was Nexus created by Tim Berners Lee. He invented HTML also.
+Note: First browser was Nexus created by Tim Berners Lee. He invented HTML also.
 
 
 ###  What is index.html                    
@@ -1082,7 +1142,7 @@ Its the first line in the html document.
 
 A semantic element clearly describes its meaning to both the browser and the developer.
 
-``` <header>  <nav>  <main> <strong>````  HTML5 added a lot of semantic tags.
+``` <header>  <nav>  <main> <strong> ```.  HTML5 added a lot of semantic tags.
 
 
 ###  What is validate of the document
@@ -1139,8 +1199,12 @@ Note: Do not set width and height due to responsive design, manipulate width hei
      <source  media="(min-width: 768px)"   srcset-"">
      <source  media="(min-width: 360px)"   srcset-"">
      <img src=""  alt="">
+   
+   ```
+    
+How to correctly add Image with semantic description and for search robots
 
-    CORRECT: Image with semantic description and for serach robots
+   ```
    <figure>
      <img src=""  alt="">
      <figcaption>image description</figcaption>     
@@ -1150,3 +1214,106 @@ Note: Do not set width and height due to responsive design, manipulate width hei
 Note:
    *alt* attribute for *img* element: set the default text before image loading or failed.
    Also it can be pronounced for accesibility. Validator will failed if alt is missed for img 
+
+
+###  Types of lists in HTML                    
+
+  - ordered(numered) lists      ```<ol start="1" reversed> <li>....```
+  
+  - unordered(markered) lists   ```<ul> <li>   disk by default ```
+   
+Note:  Nested lists *ol* will start with 1.  Nested list *ul*  will start with circle
+   
+  - semantic lists  
+    
+   ```
+   <dl> determinations lists        
+      <dt>   termin
+      <dd>   description
+   
+   ```
+
+
+
+
+### Types of Input elements
+
+Attribute type:
+
+ - text:  
+    
+ - number:      attributes *min*  *max*  *step*  !useful for mobile phones: keyboard will be displayed
+    
+ - password:    
+   
+ - range
+    
+ - color 
+    
+ - submit 
+   
+ - reset  
+   
+ - text   list="list"  + <datalist>
+   
+ - email:     inside <form> it can be validated:  !useful for mobile phones: keyboard will be displayed
+   
+ - url:       inside <form> it can be validated
+   
+ - image 
+   
+ - tel:    !useful for mobile phones: keyboard will be displayed
+   
+ - search 
+   
+ - date         attributes *min*  *max*  *default*
+   
+ - datetime-local:  time can be added and show local time date
+   
+ - month:    month can be chosen
+   
+ - time:     only time
+   
+ - week:     number of the week in the year (1-52)
+   
+ - hidden    to post on the form some kind of technical data to server
+                tracking info?
+
+ - file      show file dialog  [accept]  [multiple]
+   
+ - checkbox  *checked* attrubute
+   
+ - radio:    set *name* to the same value   *checked* attrubute
+                Use <label> for checkbox and radio
+
+
+### What is canvas
+   
+HTML5 element and API for drawing graphics
+
+###  For what do we use data attributes
+   
+The old-style. For store some info.  ```  data-price="30" ```
+
+
+###  Difference between script, script async and script defer 
+
+ - **script**        : block HTML reading
+	
+ - **script async**  : executing pararell with HTML reading (some code analytics)
+	
+ - **script defer**  : execution AFTER all HTML reading(parsing), all DOM tree was loaded
+
+
+###  What is datalist
+
+This is HTML5 element for creating dropdown list.
+
+   ```
+   <input list="country">
+   <datalist id="country">  =>  set the same id
+      <option value="India">
+      <option value="Italy">
+   </datalist>
+
+   ```
