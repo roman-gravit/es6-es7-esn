@@ -222,14 +222,16 @@
   - #! (Shebang)
 
 
-##  What is ECMAScript
+## Common
+
+###  What is ECMAScript
 
 Specification(standart) of the scripting language, rules, recomndetations.
 
 What the difference between JavaScript and ECMAScript: JavaScript is one of the versions of the script language which accords to EMCAScript.
 
 
-##  JS scope 
+###  JS scope 
 
 Before ES6 (2015), JavaScript variables had only Global Scope and Function Scope.
 ES6 introduced two important new JavaScript keywords: **let** and **const**
@@ -268,29 +270,250 @@ In "Strict Mode", undeclared variables are NOT automatically global.
 https://habr.com/ru/companies/lanit/articles/718130/
 
 
-##  Hoisting
+###  Lexical environment
+
+When the JavaScript engine creates a new execution context for a function, 
+it creates a new lexical environment to store variables defined in that function during the execution phase.
+
+A lexical Environment is a data structure that holds an identifier-variable mapping. 
+(here identifier refers to the name of variables/functions, and the variable is the reference to the actual object 
+[including function type object] or primitive value).
+
+The lexical environment contains two components:
+
+ - **Environment record:** It is the actual place where the variable and function declarations are stored.
+
+ - **Reference to the outer environment:** It means it has access to its outer (parent) lexical environment.
+
+
+   ```
+   let language = 'JavaScript';
+   function a() {
+       const b = "Dart";
+       console.log("Inside function a");
+   }
+   a();
+   console.log("Global execution context")
+   ```
+
+When the JavaScript engine creates a new execution context for global, it creates a new lexical environment to store variables 
+and functions defined in the scope. It looks like this:
+
+   ```
+   globalLexicalEnvironment = {
+   environmentRecord: {
+         language    : 'JavaScript',
+         a : < reference to function object >
+   }
+   outer: null
+   }
+
+   ```
+
+When the JavaScript engine creates a new execution context for function a(), it creates a new lexical 
+environment to store variables and functions defined in the scope. It looks like this:
+
+   ```
+   functionLexicalEnvironment = {
+      environmentRecord: {
+            b    : 'Dart',
+      }
+      outer: <globalLexicalEnvironment>
+   }
+
+   ```
+
+When the function completes the execution it may or may not be removed from the stack, depending on if that lexical environment 
+is referred to by any other lexical environments in their outer lexical environment property.
+
+
+    https://dzen.ru/a/ZVfqjmXi_AVwGimN   https://habr.com/ru/articles/474852/
+
+    https://javascript.plainenglish.io/scope-chain-and-lexical-environment-in-javascript-eb1f6e60997e
+
+
+
+###  Hoisting
+
+Hoisting is 'bubbling' the var or function at the top of the scope
 
 In JavaScript, a variable can be declared after it has been used.
 
- - let  
+ - **let**  
     Variables defined with *let*  and *const* are hoisted to the top of the block, but NOT initialized.
 	
-	Meaning: The block of code is aware of the variable, but it cannot be used until it has been declared.
+ 	 Meaning: The block of code is aware of the variable, but it cannot be used until it has been declared.
     
-	Using a *const* variable before it is declared will result in a ReferenceError.
+	 Using a *const* variable before it is declared will result in a ReferenceError.
     
-	The variable is in a "temporal dead zone" from the start of the block until it is declared:
+	 The variable is in a "temporal dead zone" from the start of the block until it is declared:
 
- - const
+ - **const**
     Using a const variable before it is declared, is a syntax error, so the code will simply not run.
 
- - var
+ - **var**
     Using a *var* variable before it is declared will result *undefined*
 
-  NOTE1: JavaScript only hoists declarations, not initializations.
+Note: JavaScript only hoists declarations, not initializations.
 
 
-##  Symbol 
+###  this and Execution Context
+
+There are three kinds of Execution Context in JavaScript:
+
+   - Global Execution Context (GEC): The global execution context is created when a JavaScript script 
+                                     first starts to run, and it represents the global scope in JavaScript. 
+
+   - Function Execution Context (FEC). When the function is called the function context is created.
+   
+   - eval 
+  
+   *this*  depends on the context. 
+   In the GEC  *this* is the ref to the *window*.
+ 
+
+   *this*  is the object before *.*  
+   Function will work with the context in which it was called.
+   If context was lost - *this* will be global object or undfefined('use strict' is On)
+
+
+###  What is *this* is Javascript
+
+ - Context of the call
+
+ - reference to the current object which calls the function/its method
+
+Problem: loss the context of the called function. Solved with:
+
+ - call    function.call(context(this), param1, param2)
+
+ - apply   function.apply(context(this), [param1, param2])
+ 
+ - bind    let call = function.bind(context(this), param1, param2) - it will create 
+			  another function-proxy which can be assigned to varibale and call later
+	
+	*this* inside the context of the function
+
+
+###  What is ES6 modules 
+
+Approach to organize JS code for more convinient work and to maintain the clean global scope of the app.
+Main two things:   
+
+- import (from other file)
+
+- export(from this file)
+
+*CommonJS*  *NodeJs*
+
+
+https://habr.com/ru/companies/ruvds/articles/492510/  [2020]   
+
+https://habr.com/ru/companies/netologyru/articles/351704/ [2018]
+
+
+###  What is desrtucting (ES6)
+
+To simplify destructing the object into vars
+   
+   ```
+   const person = { name:"Mike" , age: 30 }
+   ES5 =>  var name = person.name;  var age = person.age;
+   ES6 => const {name, age} = person; 
+   ```
+
+###  Whats temporal dead zone(TDZ)  Inrtoduced in ES6
+
+ - var can hoisting...
+
+ - In ES6  let and const also do hoisting BUT they will be put to TDZ,
+   and not will be visible until the line where they declared.
+     
+https://www.youtube.com/watch?v=OgE3P6kEPz4
+
+
+###  *use strict*
+
+Defines that JavaScript code should be executed in "strict mode" 
+
+Pro: 
+   - Better error checking
+   
+   - Improved performance
+   
+   - More secure code: Strict mode helps to reduce the number of potential security vulnerabilities in JavaScript code. 
+   
+   - *this* on global context is undefined
+        
+Contra: 
+   - Compatibility issues: : Not all JavaScript code is compatible with strict mode
+        
+   - Cannot use function.caller  function.arguments
+
+Can be added via:
+
+ - add *use strict* at the top of the file
+
+ - add *use strict* at the top of the function: function scope
+
+ - use ES6 modules
+
+
+##  Data types, operators
+
+###  Data types in JS
+
+at current moment:
+
+ - string
+
+ - number 
+
+ - boolean
+
+ - BigInt (..n)
+ 
+ - Object
+
+ - null  (typeof == object)
+
+ - undefined 	
+
+ - Symbol
+
+
+###  Difference between == and ===
+
+ ==  : abstract equality comparison operator. just compare the values. JS compare with type changing: ``` 1=="1" ```
+
+ === : is the strict equality comparison operator (take care about data types)
+
+Highly recommended to add strict mode:
+
+ - add *use strict* at the start of the js document
+ 
+ - add *use strict* at the start of the js function
+
+ - in the ES6 for modules its ON by default
+
+
+###  Whats is !! (double negotiation) 
+
+it can be used to CONVERT a value to a boolean. The second approach is to use Boolean(...)
+    
+Using the double negation operator is functionally equivalent to using the Boolean() function.
+    
+*falsy*:   0.0 |  undefined |  NaN  | null  |  ""  |  false    => ALWAYS false
+
+
+###  Difference between null and undefined
+
+ - undefined: the variable was declared but no value was set
+
+ - null: definite set the the value is null (typeof null=='object')
+
+
+###  Symbol 
 
 Symbol is a built-in object whose constructor returns a symbol primitive — also called a Symbol value or just a Symbol 
 — that's guaranteed to be unique. Symbols are often used to add unique property keys to an object that won't 
@@ -323,39 +546,57 @@ Symbol properties on a given object. Note that every object is initialized with 
 so that this array will be empty unless you've set Symbol properties on the object.
 
 
-##  Data types in JS
-   At current moment:
-    - string
-	- number 
-	- BigInt (..n)
-	- boolean
-	- Symbol
-	- Object
-	- null  (typeof == object)
-	- undefined 	
+###  What is boxing/unboxing in JS
+
+- BOXING: For promitive data types if you want to use methods(toLowerCase...for ex) 
+   JavaScript would automatically wrap the primitive type into the corresponding object type => AUTOBOXING
+   After calling its method object will be desrtoyed
+   MANUAL BOXING -  Number(10)
+
+ - UNBOXING: Opposite operation valueOf(). The process of unboxing can be achieved implicitly (coercion).
+
+###  && (AND)  || (OR) operators
+
+  - AND:  will return **first false** OR **last true value**
+         
+          ```
+          console.log(false && 2021 && 'string')    // false
+          console.log(2021 && {} && 'string')       // 'string'
+		    console.log(true && null && 'string')     // null
+         
+          ```
+
+  - OR:  will return **first true value**
+
+         ```
+         console.log(false || 2021 || 'string')    // 2021
+         console.log(2021 || {} || 'string')       // 2021
+		   console.log(true || null || 'string')     // true
+
+         ```
 
 
-##  Difference between == and ===
-   ==  : abstract equality comparison operator
-   === : is the strict equality comparison operator (take care about data types)
+## Function, Array
 
-   Highly recommended to add strict mode:
-   - add *use strict* at the start of the js document
-   - add *use strict* at the start of the js function
-   - in the ES6 for modules its ON by default
-
-
-##  Difference between function DECLARATION and function EXPRESSION
+###  Difference between function DECLARATION and function EXPRESSION
 
 The main difference between a function expression and a function declaration is 
 the function name, which can be omitted in function expressions to create anonymous functions. 
    
  - Declaration:  use the function keyword and specify a name:
-     function sum(a, b) { return a+b; }
+   
+   ```
+   function sum(a, b) { 
+      return a+b; 
+   }
+   ```
 
- - Expression: - create a function expression and MUST assign it to a variable that can be called. 
-     const sum  = function(a, b) { return a+b; }
-     const sum2  = (a, b) => { a+b;}  Arrow function expressions
+ - Expression: create a function expression and MUST assign it to a variable that can be called. 
+    
+   ```
+   const sum  = function(a, b) { return a+b; }
+   const sum2  = (a, b) => { a+b;}      
+   ```
  
  - Named Function Expression
 	 It allows the function to reference itself internally.
@@ -374,29 +615,61 @@ the function name, which can be omitted in function expressions to create anonym
 		 Therefore, only declared functions can be used before initialization.
 
 
-##  Difference between null and undefined
-   - undefined: the variable was declared but no value was set
-   - null: definite set the the value is null (typeof null=='object')
+###  What is Higher Order Functions
+
+Which return other function OR function as input parameter.
 
 
-##  What is ES6 modules 
+###  What is clean function
 
-Approach to organize JS code for more convinient work and to maintain the clean global scope of the app.
-Main two things:   
+ - No side effects
 
-- import (from other file)
-
-- export(from this file)
-
-*CommonJS*  *NodeJs*
+ - Return the same result with the same input parameters
 
 
-https://habr.com/ru/companies/ruvds/articles/492510/  [2020]   
+###  Difference between regular and arrow functions
 
-https://habr.com/ru/companies/netologyru/articles/351704/ [2018]
+  - *this* for arrow is always taken from parent context, it will not create its own context
+  
+  - arrow function cannot be used as a constructor
+  
+  - arrow has no arguments property
+  
+ - can be used as class methods, and can be called as callbacks.
+ 
+In this case *this* will not be lost:
+
+  ```
+  class Person {
+	  age: 42, 
+	  getAge = () => {
+	      return this.age;	
+	  }
+  }	  
+  const person = new Person();
+  setTimeout(person.getAge, 1000); /// 42
+  ```
+
+###  function: pseudo array arguments
+
+	Every function has *arguments*, but it has only *length* property.
+	Because  *arguments* its simply Object with values and propertry *length*.
+	You can convert to array via spread operator:  [...argumnets]
+	ARROW functions do NOT have arguments.
 
 
-##  Arrays
+###  How parameters passed to functions
+
+Always *by value*, BUT  for objects the value passed is the value of the reference
+
+
+###  Types of timers in JS
+  
+ - id = setTimeout(callback, time). Only once
+   
+ - id = setInterval(callback, time). Call via intervals
+
+###  Arrays
 
  - forEach  (callback(element, index, array))   Unmatable
 
@@ -478,7 +751,7 @@ https://habr.com/ru/companies/netologyru/articles/351704/ [2018]
 		- acc 
 
 
-##  Difference between forEach and map
+###  Difference between forEach and map
 
    forEach - executes a provided function once for each array element
 	          return UNDEFINED
@@ -486,73 +759,394 @@ https://habr.com/ru/companies/netologyru/articles/351704/ [2018]
 	          returns new array with each element being the result of the callback function.
 
 
-##  Pseudo array function arguments
-
-	Every function has *arguments*, but it has only *length* property.
-	Because  *arguments* its simply Object with values and propertry *length*.
-	You can convert to array via spread operator:  [...argumnets]
-	ARROW functions do NOT have arguments.
 
 
-##  this and Execution Context
-
-There are three kinds of Execution Context in JavaScript:
-
-   - Global Execution Context (GEC): The global execution context is created when a JavaScript script 
-                                     first starts to run, and it represents the global scope in JavaScript. 
-
-   - Function Execution Context (FEC). When the function is called the function context is created.
-   
-   - eval 
   
-   *this*  depends on the context. 
-   In the GEC  *this* is the ref to the *window*.
- 
 
-   *this*  is the object before *.*  
-   Function will work with the context in which it was called.
-   If context was lost - *this* will be global object or undfefined('use strict' is On)
+###  What is generator
 
-##  Difference between regular and arrow functions
-
-  - *this* for arrow is always taken from parent context, it will not create its own context
-  
-  - arrow function cannot be used as a constructor
-  
-  - arrow has no arguments property
-  
- - can be used as class methods, and can be called as callbacks.
- 
-In this case *this* will not be lost:
-
-  ```
-  class Person {
-	  age: 42, 
-	  getAge = () => {
-	      return this.age;	
-	  }
-  }	  
-  const person = new Person();
-  setTimeout(person.getAge, 1000); /// 42
-  ```
-
-   
-##  Diff between Object.freeze() and const
-   
-   - const:  just const the reference. 
-   
-   - Freeze:  tottally freeze the object ( make immutable)
-
-##  What is generator
-   
 Add *  before the function name. Add yield to the for loop inside the function body.
 
 After the first call function will return generator(iterator) with the *next* method. 
 
-## Prototype inheritence
 
 https://habr.com/ru/companies/otus/articles/685528/
 
 https://habr.com/ru/companies/ruvds/articles/554288/
 
 https://www.youtube.com/watch?v=b55hiUlhAzI
+
+
+## Objects
+
+###  Prototype inheritence
+
+Each object in JS has property *__proto__* which is the ref to other object.
+If we try to call object method, then JS try to find this property from current object to its superclass(s)
+    
+-- How to create object without prototype
+```Object.create(null, {..our object})``` - object without prototype.
+   
+The trick here is in our first argument to Object.create. Normally this is where we would 
+pass in the object that we want to serve as the prototype. 
+But if we pass in null instead, our new object doesn't inherit from a prototype at all.
+
+
+###  Diff between Object.freeze() and const
+   
+ - const:  just const the reference. 
+   
+ - Freeze:  tottally freeze the object ( make immutable)
+
+###  How to create object
+
+ - object literal  obj = {name: ""}
+
+ - function constructor  function Person(name){ this.name = name}  ... new Persion("Mike")
+
+ - Object.create(person)
+
+###  What for is *new* word
+
+When a function is called with the *new* keyword, the function will be used as a constructor. 
+*new* will do the following things:
+
+ - Creates a blank, plain JavaScript object. For convenience, let's call it *newInstance*
+   
+ - Call constructor — function Foo wth arguments and *this*, binded to just created object.
+
+ - Executes the constructor function with the given arguments, binding newInstance as the this context
+      (i.e. all references to this in the constructor function now refer to newInstance).
+ 
+ - If the constructor function returns a non-primitive, this return value becomes the result 
+      of the whole new expression. Otherwise, if the constructor function doesn't return anything 
+      or returns a primitive, newInstance is returned instead.
+
+https://habr.com/ru/articles/120193/
+
+
+###  Why two equal objects is not == false    
+
+Objects compared by reference. References(address in memory) are different for different objects  ```console.log({} == {}) => false```
+
+###  Object.freeze()  and Object.seal()
+
+ - Freeze: static method freezes an object. 
+   Freezing an object prevents extensions and makes existing properties non-writable and non-configurable. 
+   A frozen object can no longer be changed: new properties cannot be added, existing properties cannot be removed, 
+   their enumerability, configurability, writability, or value cannot be changed, and the object's prototype cannot be re-assigned. 
+   freeze() returns the same object that was passed in.
+   NOTE: Freezing an object is the highest integrity level that JavaScript provides.
+
+ - Seal: the same as Freeze BUT - Values of existing properties can still be changed as long as they are writable.
+
+###  Deep / Shallow copy of the object
+   
+ - SHALLOW COPY: After change the original object - copy will change also. Just simply assing it:  const obj_copy = obj_original;
+
+ - DEEP COPY: After change the original object - copy will NOT change.
+    ``` {...original} | Object.assign(null, original) | JSON.parse(JSON.stringify(original)) ```
+
+###  Whats function call chaining
+
+Object methods are called after each other => ```calculator.add(1).divide(2).add(3)```
+
+Return *this* from the method.
+
+
+
+## DOM
+
+###  What is DOM
+	
+Document Object Model which browser builds in memory depending on parsing HTML code.
+
+This is interface for communicating of the Javascript and page elements. Tree structure. 	
+
+The DOM tree is the structure which contains parent/child/sibling elements in relation to each other. 
+
+
+###  What is Event Propogation(распространение)
+
+Propagation refers to how events travel through the Document Object Model (DOM) tree. Its a mechanism.
+
+Propogates from window to the called element and event will *touched* all the parents of the called element. 
+
+Three phases of the event Propogation:
+ - 1. Capture phase (from root to target element)
+ 
+ - 2. Target (event reaches the target element)
+ 
+ - 3. Bubbling phase ( return back from target to window, also raises events on all parents)
+
+
+###  What is Event Delegation
+	
+Add just one event handler to the parent element, no need to add several listeners for all parent children.
+
+Use the event.target and delegate the changes to it.
+
+
+###  Difference between e.preventDefault and e.stopPropogation
+
+ - preventDefault: stop(cancel) the  event for the elelent
+   
+ - stopPropogation: cancel the bubbling of the event
+
+
+###  Methods of search the elements in DOM
+ - getElementById
+ 
+ - getElementsByName
+
+ - getElementsByTagName
+
+ - getElementsByClassName
+
+ - querySelector(css selectors) - first founded element
+
+ - querySelectorAll(css selectors)
+
+
+###  Difference between event.target and currentTarget
+
+ - currentTarget tells us on which element the event was attached to or the element whose eventListener triggered the event. 
+	
+ - target tells where the event started.
+
+
+###  Difference between event.stopPropogation and stopImmidiatePropogation
+
+If event occurs in browser the bubbling mechanims also occurs.
+From target elelent to its all parents. You can stop bubbling in every parent event handler..
+
+ - stopPropogation: cancel bubbling BUT it will occur on current
+	
+ - stopImmidiatePropogation: cancel bubbling in current ALSO
+
+
+###  Difference between event load and DOMContentLoaded
+
+ - load:  loaded html/css/images....
+	
+ - DOMContentLoaded:  css/images were NOT loaded, so it occurs BEFORE load event
+	
+ - beforeUnload / Unload
+
+
+###  Types of nodes in the DOM tree (12)
+   - ELEMENT_NODE            1      <div>  <span> 
+   - ATTRIBUTE               2      "id" "type" 
+   - TEXT                    3      Text inside element
+   - CDATA_SECTION           4      Represents a CDATA section in a document (text that will NOT be parsed by a parser)
+   - PROCESSING_INTSRUCTION  7      <?xml version="1.0"?>
+   - COMMENT                 8       <!-- -->
+   - DOCUMENT                9      window.document
+   - DOCUMENT_TYPE          10      <!doctype>
+   - DOCUMENT_FRAGMENT      11   
+   
+   https://habr.com/ru/articles/413287/   https://javascript.ru/optimize/documentfragment-0
+   
+   Фишка заключается в том, что когда documentFragment вставляется в DOM - то он исчезает, 
+     а вместо него вставляются его дети. Это единственное и основное свойство documentFragment 
+     по сравнению со всеми остальными сущностями DOM.
+     Но операция вставки в "живой" DOM дорогая. И тут на помощь приходит как раз documentFragment. 
+     Можно вставлять в него, а уже потом его добавить в DOM.
+
+   - ENTITY_REFERENCE        5  (!!! legacy)
+   - ENTITY                  6  (!!! legacy)
+   - NOTATION               12  (!!! legacy)
+
+  
+###  Difference between HTMLElement and Node
+ 
+ - Element: only html element
+
+ - Node: anything within the document (elements, texts, comments)
+
+https://www.youtube.com/watch?v=rhvec8cXLlo
+
+
+###  How to move via the DOM tree
+
+ - for all types of Nodes
+                     parentNode  
+      previousSibling  <=  DIV  => nextSibling
+         fisrtChild  <= childNodes =>  lastChild
+
+ - only for Elements
+                             parentElement 
+      previousElementSibling  <=  DIV  => nextElementSibling
+         fisrtElementChild  <= children   =>   lastElementChild
+
+
+###  Types of events in JS
+
+ - Mouse       (click, mousemove, mouseover...)
+
+ - Keyboard    (keydown, keypress, keyup)
+
+ - Form        (submit, blur, focus, reset, change)
+
+ - DragDrop    (dragstar, dragend, drag)  
+
+ - Multimedia  
+
+ - Touch  
+
+ - Buffer  
+
+ - Print   
+ 
+ - Animation  
+
+ - Frames/Window/Document    
+
+
+###  How to add event handler for DOM element 
+
+ - INLINE event handler     <button onclick="...">
+       You cannot set 2 event handlers
+
+ - Event handler property:  btn.onclick = functon...
+       You cannot set 2 event handlers
+   
+ - addEventListener         btn.addEventListener("click", callback)
+   
+   addEventListener(eventType, listener, caprture / {options})
+      - capture(default=false): Если равно true, useCapture указывает, что пользователь желает начать захват. 
+                                После инициализации захвата все события указанного типа будут отправлены в 
+                                зарегистрированный listener перед отправкой в какой-либо EventTarget под ним в дереве DOM
+      - options. Объект options, который определяет характеристики объекта, прослушивающего событие.
+                 - capture
+                 - once   Boolean указывает, что обработчик должен быть вызван не более одного раза после добавления. 
+                          Если true, обработчик автоматически удаляется after call.
+                 passive  true - что обработчик никогда не вызовет preventDefault(). 
+   
+   REMOVE:  removeEventListener("click", callback)
+
+
+
+## HTML
+
+###  What is HTML. How to use it
+
+Hypertext markup language. Formatted text which will be interpreted by browser. This is the skeleton of the webpage,
+    
+NOTE1: First browser was Nexus created by Tim Berners Lee. He invented HTML also.
+
+
+###  What is index.html                    
+
+It is the start point of your web site. Browser will try to load this filename by defautl at first try.
+Situated in the root folder of the webserver.
+
+
+###  Base structure of the html page        
+
+   ```
+   <!doctype>
+   <html>
+      <head>   - all needed info about the document and included css js
+         <title>
+      <body>   - all the content of the document which will be rendered
+   ```
+
+Tags can be pair or single:   ```<div>text</div>```  or  ```<img src=".." >```
+Each tag can have its own set of attributes.
+
+*Note:* type ! and press tab: vscode will generate it.
+
+
+###  What is doctype and for what it needed  
+
+<!doctype html>:  Used to tell browser the document type. In which standart browser needs to parse and interpret the document.
+Its the first line in the html document.
+
+###  What is ```<meta>```            
+
+*meta* - special tag inside *head*
+ 
+ - Short description of the page for search systems and robots.
+   
+ - Information to coorectly work of current page on different devices
+   
+ - Fix data about the page and helps browser to correctly render it
+
+ - SEO(Search Engine Optimization) information (author, keywords, description)
+
+   https://www.ashmanov.com/education/articles/seo/
+
+
+###  What is semantic
+
+A semantic element clearly describes its meaning to both the browser and the developer.
+
+``` <header>  <nav>  <main> <strong>````  HTML5 added a lot of semantic tags.
+
+
+###  What is validate of the document
+
+Check document for W3C standarts:
+ 
+ - check for doctype
+   
+ - check syntax
+
+ - check inner nesting of the elements
+
+ - check DTD
+    
+ - check for correctness tags and attributes
+
+
+###  Button                                 
+
+Type:
+   
+   - button:   simple button
+     
+   - submit:   inside <form> - send form data
+   
+   - reset:    inside <form> - reset form data
+    
+    *autofocus* attribute  *disabled* attribute 
+
+Which element better to use for buttons: It depends on context and what for we need for:
+   
+  - button type=button
+
+  - button type=submit
+
+  - input type=submit
+
+  - input type=button
+
+  - div
+
+  - a
+
+
+###  Images and 'alt' attribute                                   
+
+  ``` <img  src="href" alt="image was not loaded"> ```
+   
+Note: Do not set width and height due to responsive design, manipulate width height depending on device on CSS side
+
+   ```
+   <picture>
+     <source  media="(min-width: 1024px)"  srcset-"">
+     <source  media="(min-width: 768px)"   srcset-"">
+     <source  media="(min-width: 360px)"   srcset-"">
+     <img src=""  alt="">
+
+    CORRECT: Image with semantic description and for serach robots
+   <figure>
+     <img src=""  alt="">
+     <figcaption>image description</figcaption>     
+   
+   ```
+
+Note:
+   *alt* attribute for *img* element: set the default text before image loading or failed.
+   Also it can be pronounced for accesibility. Validator will failed if alt is missed for img 
