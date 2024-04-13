@@ -1,6 +1,30 @@
-import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols } from "../src/practical-tasks";
-import { FindShortestWordSplitFor, FindShortestWordSort } from "../src/practical-tasks";
-import { StringToInitials, StringToInitialsMap } from "../src/practical-tasks";
+import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort } from "../src/practical-tasks";
+import { StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath } from "../src/practical-tasks";
+import { StringDuplicateIndexReduce, StringDuplicateIndexMap } from "../src/practical-tasks";
+
+test("StringDuplicateIndex", () => {
+	expect(StringDuplicateIndexReduce("aBcd")).toEqual("A-Bb-Ccc-Dddd");
+	expect(StringDuplicateIndexReduce("cWAt")).toEqual("C-Ww-Aaa-Tttt");
+
+	expect(StringDuplicateIndexMap("aBcd")).toEqual("A-Bb-Ccc-Dddd");
+	expect(StringDuplicateIndexMap("cWAt")).toEqual("C-Ww-Aaa-Tttt");
+});
+
+test("GetMinMaxInArray", () => {
+	expect(GetMinMaxInArray([1, 2, 3, 4, 5, 12, 0, 11])).toEqual([0, 12]);
+	expect(GetMinMaxInArray([1])).toEqual([1, 1]);
+
+	expect(GetMinMaxInArraySort([1, 2, 3, 4, 5, 12, 0, 11])).toEqual([0, 12]);
+	expect(GetMinMaxInArraySort([1])).toEqual([1, 1]);
+	
+	expect(GetMinMaxInArrayMath([1, 2, 3, 4, 5, 12, 0, 11])).toEqual([0, 12]);
+	expect(GetMinMaxInArrayMath([1])).toEqual([1, 1]);
+});
+
+test("SumDigits", () => {
+	expect(SumDigits(99)).toBe(18);
+	expect(SumDigits(-32)).toBe(5);
+});
 
 test("StringToInitials", () => {
 	expect(StringToInitials("Bill Gates")).toBe("B.G.");

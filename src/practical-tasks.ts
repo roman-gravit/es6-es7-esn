@@ -1,7 +1,62 @@
-export { IsPalindrome, IsPalindromeIgnoreSpecialSymbols };
-export { FindShortestWordSplitFor, FindShortestWordSort };
-export { StringToInitials, StringToInitialsMap };
+export { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringDuplicateIndexReduce,
+	StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexMap };
 
+
+function StringDuplicateIndexReduce(str: string): string {
+	return str.toLowerCase()
+			  .split("")
+			  .reduce((acc, current, index) => {
+					if(!index) {
+						return current.toUpperCase();
+					} else {
+						return `${acc}-${current.toUpperCase()}${current.repeat(index)}` 
+					}
+					
+			  }, "");
+}
+
+function StringDuplicateIndexMap(str: string): string {
+	return  str.toLowerCase()
+	           .split("")
+			   .map((letter, index) => {
+					return `${letter.toUpperCase()}${letter.repeat(index)}`	
+			       })
+			   .join("-");
+}
+
+function GetMinMaxInArray(arr: Array<number>): Array<number> {
+	let min = arr[0];
+	let max = arr[0];
+
+	for(let i =1; i < arr.length; i++) {
+		if(arr[i]< min) {
+			min = arr[i];
+		}
+		if(arr[i]> max) {
+			max = arr[i];
+		}
+	}
+
+	return [min, max];
+} 
+
+function GetMinMaxInArrayMath(arr: Array<number>): Array<number> {
+	return [Math.min(...arr), Math.max(...arr)]
+}
+
+function GetMinMaxInArraySort(arr: Array<number>): Array<number> {
+	arr = arr.sort((a, b) => a - b);
+	return [arr[0], arr[arr.length-1]];
+} 
+
+function SumDigits(num: number): number {
+	return Math.abs(num)
+	           .toString()
+	    	   .split("")
+			   .reduce((acc, current) => {
+					return acc + parseInt(current); 
+				}, 0);
+}
 
 function StringToInitials(str: string): string {
 	let words =  str.split(" ");
