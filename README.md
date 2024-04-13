@@ -792,6 +792,16 @@ https://habr.com/ru/companies/ruvds/articles/427295/ 2018
 https://thecode.media/currying/
 
 
+###  Debouncing function
+
+Debouncing is a technique used to limit the number of times a function is executed in response to an event. 
+
+It is particularly useful for functions that are triggered by events that occur frequently, such as scrolling or resizing. 
+
+By debouncing a function, you can ensure that it is only executed after a certain delay since the last invocation. 
+
+This helps improve performance by reducing the number of unnecessary function calls.
+
 
 ###  Difference between function and method 
 

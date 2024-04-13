@@ -1,10 +1,6 @@
 
-import { sum } from "../src/file";
-
 // size | has | add | delete | forEach
 test("set", () => {
-
-	console.log(sum(1,2));
 
 	let set = new Set<number>();
 	expect(set.size).toEqual(0);
@@ -65,6 +61,30 @@ test("map", () => {
 	expect(map1.get("c")).toEqual(undefined);
 
 });
+
+
+// object set is much faster than map.set
+test("map-object-benchmark", () => {
+	
+	console.time("map");
+	const map = new Map<number, number>();
+	for(let i =0; i< 1000000; i++) {
+		map.set(i, i);
+	}
+	console.timeEnd("map");
+	
+	// Object is faster than map
+	console.time("object");
+	const obj: any = {};
+	for(let i =0; i< 1000000; i++) {
+		obj[i] = i;
+	}
+	console.timeEnd("object");
+
+});
+
+
+
 
 // A WeakMap can be used to associate metadata with an object, without affecting the lifetime of the object itself. 
 // This is very similar to the private members example, since private members are also modelled as external metadata 
