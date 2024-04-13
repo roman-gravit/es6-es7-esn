@@ -532,7 +532,7 @@ Can be added via:
    ```
 
 
-### What is Babel
+###  What is Babel
 
 Transpiler trasform new code (ECMA) to old variants for cross browser compatibility
 
@@ -1087,7 +1087,7 @@ Object wrapper - during runtime, primitive is temporary wrapped to his objects s
 For..of can work with Map() and Set()
 
 
-### Promise
+###  Promise
 
 It is an object used for async operations, with states.
 

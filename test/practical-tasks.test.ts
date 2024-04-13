@@ -1,6 +1,21 @@
-import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort } from "../src/practical-tasks";
-import { StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath } from "../src/practical-tasks";
-import { StringDuplicateIndexReduce, StringDuplicateIndexMap } from "../src/practical-tasks";
+import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringToInitials, 
+	StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexReduce, 
+	StringDuplicateIndexMap, FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber } from "../src/practical-tasks";
+
+test("FooBarNumber", () => {
+	expect(FooBarNumber(5)).toEqual("1,2,foo,4,bar");
+	expect(FooBarNumber(15)).toEqual("1,2,foo,4,bar,foo,7,8,foo,bar,11,foo,13,14,foobar");
+});
+
+test("FindStringCapitalLettersForLoop", () => {
+	expect(FindStringCapitalLettersForLoop("CodEWaRs")).toEqual([0, 3, 4, 6]);
+	expect(FindStringCapitalLettersForLoop("justForTest")).toEqual([4, 7]);
+	expect(FindStringCapitalLettersForLoop("CodEWaRsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavvvvvvvvvvvvvvv")).toEqual([0, 3, 4, 6]);
+
+	expect(FindStringCapitalLettersReduce("CodEWaRs")).toEqual([0, 3, 4, 6]);
+	expect(FindStringCapitalLettersReduce("justForTest")).toEqual([4, 7]);
+	expect(FindStringCapitalLettersReduce("CodEWaRsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavvvvvvvvvvvvvvv")).toEqual([0, 3, 4, 6]);
+});
 
 test("StringDuplicateIndex", () => {
 	expect(StringDuplicateIndexReduce("aBcd")).toEqual("A-Bb-Ccc-Dddd");

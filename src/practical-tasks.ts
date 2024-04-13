@@ -1,6 +1,47 @@
 export { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringDuplicateIndexReduce,
-	StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexMap };
+	StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexMap,
+	FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber };
 
+/** num is > 0
+ */
+function FooBarNumber(num: number): string {
+	let result = "1";
+	for(let i= 2; i <= num; i++) {
+		if(i%15===0) {
+			result+=",foobar";
+
+		} else if(i%3===0) {
+			result+=",foo";
+
+		} else if(i%5===0) {
+			result+=",bar";
+
+		} else {
+			result+=`,${i}`;
+		}
+	}
+	return result;
+}
+
+function FindStringCapitalLettersForLoop(str: string): Array<number> {
+	const result = Array<number>();
+	for(let i=0; i< str.length; i++) {
+		if(str[i].toUpperCase() === str[i]) {
+			result.push(i);
+		}
+	}
+	return result;
+}
+
+function FindStringCapitalLettersReduce(str: string): Array<number> {
+	return str.split("")
+	          .reduce( (acc:  Array<number>, current: string, index: number) => {
+					if(current.toUpperCase() === current) {
+						acc.push(index);
+					}
+					return acc;
+			  	}, []);
+}
 
 function StringDuplicateIndexReduce(str: string): string {
 	return str.toLowerCase()
