@@ -226,7 +226,9 @@
 
 ###  What is ECMAScript
 
-Specification(standart) of the scripting language, rules, recomndetations.
+Standart ECMA-262 invented by ECMA international organisation.
+
+ECMAScript is a **specification(standart) of the scripting language**, rules, recomndetations.
 
 What the difference between JavaScript and ECMAScript: JavaScript is one of the versions of the script language which accords to EMCAScript.
 
@@ -268,6 +270,24 @@ NOTE:  Automatically Global:
 In "Strict Mode", undeclared variables are NOT automatically global.
 
 https://habr.com/ru/companies/lanit/articles/718130/
+
+
+###  What is event loop and how its working
+
+JavaScript has a runtime model based on an event loop, which is responsible for executing the code, 
+collecting and processing events, and executing queued sub-tasks. 
+
+ - **stack of functions** : Every time you invoke a function, it’s added to the stack.
+
+ - **microtask queue** : A microtask is a short function which is executed after the function or program which created 
+                         it exits and only if the JavaScript execution stack is empty (Promise, MutationObserver and queueMicrotask function)
+
+ - **macrotask queue** : setTimeout, event handlers, most of the Browser Web API.
+
+ - **event loop** : (which calls tasks from stack and 2 queues)
+
+ 
+
 
 
 ###  Lexical environment
@@ -357,7 +377,7 @@ In JavaScript, a variable can be declared after it has been used.
 Note: JavaScript only hoists declarations, not initializations.
 
 
-### Closure
+###  Closure
 
 A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). 
 
@@ -420,8 +440,14 @@ Problem: loss the context of the called function. Solved with:
 
  - **apply**   function.apply(context(this), [param1, param2])
  
- - **bind**    let call = function.bind(context(this), param1, param2) - it will create 
-			      another function-proxy which can be assigned to varibale and call later
+ - **bind**    let call = function.bind(context(this), param1, param2) - it will create another function-proxy which can be assigned 
+ 
+               to varibale and call later. The bind() function creates a new function (a bound function) with the same function body 
+               
+               as the function it is being called on (the bound function's target function) with the this value bound to the 
+               
+               first argument of bind(), **which cannot be overridden.**
+
 	
 *this* inside the context of the function
 
@@ -449,16 +475,17 @@ To simplify destructing the object into vars
    
    ```
    const person = { name:"Mike" , age: 30 }
-   ES5 =>  var name = person.name;  var age = person.age;
-   ES6 => const {name, age} = person; 
+   ES5 =>  var name = person.name;  
+           var age = person.age;
+   ES6 =>  const {name, age} = person; 
+   
    ```
 
 ###  Whats temporal dead zone(TDZ)  Inrtoduced in ES6
 
  - var can hoisting...
 
- - In ES6  let and const also do hoisting BUT they will be put to TDZ,
-   and not will be visible until the line where they declared.
+ - In ES6  let and const also do hoisting BUT they will be put to TDZ and not will be visible until the line where they declared.
      
 https://www.youtube.com/watch?v=OgE3P6kEPz4
 
@@ -488,6 +515,26 @@ Can be added via:
  - add *use strict* at the top of the function: function scope
 
  - use ES6 modules
+
+
+###  Difference between REST and SPREAD operators
+
+- SPREAD:  to collect several values to array  ```["1", "2", "3", ...names]```
+    
+- REST: to pass several values to function
+
+   ```    
+   function log(a, b, ...rest) {
+      ....
+   }
+   log(1, 2, 3, 4,)
+   
+   ```
+
+
+### What is Babel
+
+Transpiler trasform new code (ECMA) to old variants for cross browser compatibility
 
 
 ##  Data types, operators
@@ -607,6 +654,43 @@ so that this array will be empty unless you've set Symbol properties on the obje
          ```
 
 
+###  What is NaN
+   
+Not-A-Number.  NaN===NaN => false.   Use to check if is Nan:  isNaN(value)  true/false
+
+###  Can we change the value of const.
+
+ - for primitives - NO
+
+ - for objects/array - YES
+
+
+###  What is % (Remainder)  operator  (remainder after deleting of two numbers)
+
+Returns the remainder left over when one operand is divided by a second operand. 
+It always takes the sign of the dividend
+   
+   ```
+    13 % 5  =>  3    
+   -13 % 5  => -3   
+    4  % 2  =>  0   
+   -4  % 2  => -0
+    
+   Note:  1 % 7 => 1   2 % 7 => 1   3 % 7 => 1:  cannot divide, we got 0 and add 1, 2, 3 to zero.
+
+   ```
+
+###  Whats Template Literals
+
+String Delimited with backtick (`) characters, allowing for 
+
+ - multi-line strings
+
+ - string interpolation with embedded expressions
+
+ - special constructs called tagged templates
+
+
 ## Function, Array
 
 ###  Difference between function DECLARATION and function EXPRESSION
@@ -694,12 +778,33 @@ Avoid polluting the global namespace.
 
    ```
 
+###  Currying 
+
+Process in functional programming where possible to reorganized function with several arguments
+to several inner functions with single argument
+
+After receiven the last argument, function do the calculaton and return result
+
+https://learn.javascript.ru/currying-partials   
+
+https://habr.com/ru/companies/ruvds/articles/427295/ 2018
+
+https://thecode.media/currying/
+
+
+
+###  Difference between function and method 
+
+ - function: block of code which is called by name and not connected to any object
+
+ - method: is called by named and determine inside the object. Its connected to object and works with its data
+
+
 ###  function: pseudo array arguments
 
-	Every function has *arguments*, but it has only *length* property.
-	Because  *arguments* its simply Object with values and propertry *length*.
-	You can convert to array via spread operator:  [...argumnets]
-	ARROW functions do NOT have arguments.
+Every function has *arguments*, but it has only *length* property. Because  *arguments* its simply Object with values and propertry *length*.
+
+You can convert to array via spread operator:  [...argumnets]. ARROW functions do NOT have arguments.
 
 
 ###  How parameters passed to functions
@@ -833,7 +938,7 @@ https://www.youtube.com/watch?v=b55hiUlhAzI
 Each object in JS has property *__proto__* which is the ref to other object.
 If we try to call object method, then JS try to find this property from current object to its superclass(s)
     
--- How to create object without prototype
+**How to create object without prototype**
 ```Object.create(null, {..our object})``` - object without prototype.
    
 The trick here is in our first argument to Object.create. Normally this is where we would 
@@ -849,15 +954,17 @@ But if we pass in null instead, our new object doesn't inherit from a prototype 
 
 ###  How to create object
 
- - object literal  obj = {name: ""}
+ - **object literal**  ```obj = {name: ""}```
 
- - function constructor  function Person(name){ this.name = name}  ... new Persion("Mike")
+ - **function constructor**  ```function Person(name){ this.name = name }```  ... new Persion("Mike")
 
  - Object.create(person)
+
 
 ###  What for is *new* word
 
 When a function is called with the *new* keyword, the function will be used as a constructor. 
+
 *new* will do the following things:
 
  - Creates a blank, plain JavaScript object. For convenience, let's call it *newInstance*
@@ -876,7 +983,10 @@ https://habr.com/ru/articles/120193/
 
 ###  Why two equal objects is not == false    
 
-Objects compared by reference. References(address in memory) are different for different objects  ```console.log({} == {}) => false```
+Objects compared by reference. References(address in memory) are different for different objects  
+
+```console.log({} == {}) => false```
+
 
 ###  Object.freeze()  and Object.seal()
 
@@ -903,13 +1013,82 @@ Object methods are called after each other => ```calculator.add(1).divide(2).add
 Return *this* from the method.
 
 
-### How to determine if property exists
+###  How to determine if property exists
 
  - obj.hasOwnProperty('string')
 
  - Operator **in**     ``` console.log("string" in obj) ```
 
  - obj['string']  
+
+
+###  Floating dialogs in JS       
+
+ - confirm (OK/Cancel)
+  
+ - prompt  (OK/Cancel + input) 
+
+ - alert   (OK) 
+
+
+###  Type of objects in JS       
+
+ - Array
+ 
+ - String
+
+ - Date
+ 
+ - Number
+
+ - Boolean
+
+ - Function
+
+ - Math
+
+ - RegExp
+
+ - Object 
+
+
+###  What is difference between *host* and *native* objects
+	
+  - **host** : objects which were provided by the envirement(browser or Node.js): console, http, history...
+
+  - **native** : This is the Javascript objects: String, Math, Objects, RegExp...
+
+  - **user objects**
+
+
+###  What is Wrapper objects
+   
+JS has primitives(string, boolean...) But they still has methods (toUpperCase..)
+
+Object wrapper - during runtime, primitive is temporary wrapped to his objects string-> new String with his methods...
+
+
+###  What is for..of
+   
+ - **for..in** :  working with INDECES
+   
+ - **for..of** : working with VALUES
+    
+For..of can work with Map() and Set()
+
+
+### Promise
+
+It is an object used for async operations, with states.
+
+- PEDNING              (start state)
+
+- FULFILLED (.then)    (completed successfully)
+
+- REJECTED  (.catch)   (operation failed with error)
+
+
+
 
 
 
@@ -987,10 +1166,10 @@ From target elelent to its all parents. You can stop bubbling in every parent ev
 
 ###  Difference between event load and DOMContentLoaded
 
+ - DOMContentLoaded:  css/images were NOT loaded, so it occurs BEFORE load event. Occur before *load*
+
  - load:  loaded html/css/images....
-	
- - DOMContentLoaded:  css/images were NOT loaded, so it occurs BEFORE load event
-	
+		
  - beforeUnload / Unload
 
 
@@ -1085,6 +1264,35 @@ https://www.youtube.com/watch?v=rhvec8cXLlo
    
    REMOVE:  removeEventListener("click", callback)
 
+
+###  Difference between attribute and property DOM element
+
+ - attribute: static value of the DOM element can be set in html
+
+ - property: is calculated property of the element can be changeable. For ex:
+
+   ``` 
+   <input  type="text" value="hello world">
+    
+   input.getAttribute("value")  // 'hello world'
+   input.value                  // 'hello world'
+   
+   // user changes input to "new text"
+    
+   input.getAttribute("value")  // 'hello world'
+   input.value                  // 'new text'
+   
+   ```
+
+###  Difference between HTMLCollection and NodeList
+
+ - HTMLCollection: DYNAMIC collection of document elements. An HTMLCollection is always a live collection. 
+        Ex: If you add a *li* element to a list in the DOM, the list in the HTMLCollection will change. 
+        *getElementsByClassName*
+
+ - NodeList: STATIC list of document nodes (element nodes, attributte nodes, and text nodes)
+        Ex: If you add a *li* element to a list in the DOM, the list in NodeList will not change.
+        *querySelectorAll*  
 
 
 ## HTML
@@ -1236,7 +1444,7 @@ Note:  Nested lists *ol* will start with 1.  Nested list *ul*  will start with c
 
 
 
-### Types of Input elements
+###  Types of Input elements
 
 Attribute type:
 
@@ -1287,7 +1495,7 @@ Attribute type:
                 Use <label> for checkbox and radio
 
 
-### What is canvas
+###  What is canvas
    
 HTML5 element and API for drawing graphics
 
@@ -1317,3 +1525,45 @@ This is HTML5 element for creating dropdown list.
    </datalist>
 
    ```
+
+###  What is progressive rendering
+
+Tehchnologies which help to **encrease the webpage loading and showing it**.
+
+Rendering means converting code into an interactive webpage that our users can see and utilize its functionality. 
+
+Now, being Progressive means doing things such that the highest priority thing will be done first, after that 
+
+less priority thing will be done and in this manner, work will be completed.
+
+
+ - **Client-Side Rendering (CSR)**
+   In Client-Side Rendering the content is rendered on the client side. 
+   Here when a user visits any webpage then request to get an HTML and CSS file is made to the server and 
+   then the server sends an HTML and CSS file to the client side. 
+   After processing that code, a request to get the JS file is made and till the JS file is not loaded, 
+   HTML and CSS will not be shown on the browser. So the user will see a blank page until the JS file 
+   will not be loaded.
+
+ - **Server-Side Rendering (SSR)** 
+   In Server-Side Rendering, the content is first rendered on the server side and then send to the client side. 
+   Here when a user visits then request to get a webpage is made to the server then the server first 
+   loads the HTML and CSS file on itself and then processes it and then sends the processed web page 
+   to the client side. After getting that webpage, the User can see the webpage and the browser will be waiting 
+   for the JS file to be loaded. Till the JS file is not loaded, the User can only see the webpage 
+   but can’t interact with it. Interaction with the web page is only possible with the help of JS(Javascript).
+
+ - **Progressive Rendering**   
+   (Lazy Loading of Image / Not processing all the CSS initially)
+   In progressive Rendering, the web page is divided into different parts on the basis of priority. 
+   So different parts will be rendered sequentially according to Server-Side Rendering and sent to the client side.
+   This means that here first whole page will not be rendered on the server instead, high priority part of the 
+   page is rendered and sent to the client side, then low priority part of the page is rendered and sent 
+   to the client side.
+
+
+###  What is AJAX
+
+Approach for creating async apps using cleint-server request-response.
+
+Update web content without reloading the whole page.  Use XmlHttpRequest(legacy) or fetch.
