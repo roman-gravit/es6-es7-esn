@@ -1,6 +1,34 @@
 import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringToInitials, 
 	StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexReduce, 
-	StringDuplicateIndexMap, FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber } from "../src/practical-tasks";
+	StringDuplicateIndexMap, FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber, 
+	GetUniqueArrayElements, CreatePhoneNumber, FindStringVowels, CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap } from "../src/practical-tasks";
+
+	
+
+test("CapitalizeFirstWordLetter", () => {
+	expect(CapitalizeFirstWordLetterFor("a asd dfg  d asdasdads")).toEqual("A Asd Dfg  D Asdasdads");
+	expect(CapitalizeFirstWordLetterFor("hello world")).toEqual("Hello World");
+	expect(CapitalizeFirstWordLetterFor(" hello world")).toEqual(" Hello World");
+
+	expect(CapitalizeFirstWordLetterMap("a asd dfg  d asdasdads")).toEqual("A Asd Dfg  D Asdasdads");
+	expect(CapitalizeFirstWordLetterMap("hello world")).toEqual("Hello World");
+	expect(CapitalizeFirstWordLetterMap(" hello world")).toEqual(" Hello World");
+});
+
+test("FindStringVowels", () => {
+	expect(FindStringVowels("hello")).toEqual(2);
+	expect(FindStringVowels("hello world")).toEqual(3);
+});
+
+test("CreatePhoneNumber", () => {
+	expect(CreatePhoneNumber(123456789)).toEqual("(123) 456-789");
+	expect(CreatePhoneNumber(555095611)).toEqual("(555) 095-611");
+});
+
+test("GetUniqueArrayElements", () => {
+	expect(GetUniqueArrayElements([[1,2,3], [4,1,5], [6,7,8,5]])).toEqual([1,2,3,4,5,6,7,8]);
+	expect(GetUniqueArrayElements([[1], [2], [3,2,2], [4,1,1,2]])).toEqual([1,2,3,4]);
+});
 
 test("FooBarNumber", () => {
 	expect(FooBarNumber(5)).toEqual("1,2,foo,4,bar");

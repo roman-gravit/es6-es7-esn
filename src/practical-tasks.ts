@@ -1,6 +1,74 @@
 export { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringDuplicateIndexReduce,
 	StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexMap,
-	FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber };
+	FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber, GetUniqueArrayElements, CreatePhoneNumber, FindStringVowels,
+	CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap };
+
+
+function CapitalizeFirstWordLetterFor(str: string): string {
+	// Variant 1: check every symbol
+	let result = "";
+
+	for(let i =0; i<str.length; i++) {
+		if(str[i]===" ") {
+			result+=" ";
+		
+		} else {
+			if(str[i-1] ===" " || i==0) {
+				result+=str[i].toUpperCase();
+		
+			} else {
+				result+=str[i];
+			}
+		}
+	}
+
+	return result;
+}
+
+
+function CapitalizeFirstWordLetterMap(str: string): string {
+	// Variant 2: map
+	return str.split(" ")
+			  .map( (word) => {
+						if(word ==="") {
+							return "";
+						}
+						return `${word[0].toUpperCase()}${word.slice(1)}`;
+					})
+			  .join(" ");
+}
+
+
+function FindStringVowels(str: string): number {
+	// Variant 1: regexp
+	//const vowels = /[aeiou]/gi;
+	//return str.match(vowels)?.length || 0;
+
+	//Variant 2: array includes
+	const vowels = ["a", "e", "i", "o", "u"];
+	let result = 0;
+	str = str.toLowerCase();
+	for(const char of str) {
+		if(vowels.includes(char)) {
+			result++;
+		}
+	}
+	return result;
+}
+
+function CreatePhoneNumber(num: number): string {
+	// Variant 1
+	//const arr = num.toString().split("");
+	//return `(${arr[0]}${arr[1]}${arr[2]}) ${arr[3]}${arr[4]}${arr[5]}-${arr[6]}${arr[7]}${arr[8]}`;
+
+	// Variant 2
+	const str = num.toString();
+	return `(${str.substring(0,3)}) ${str.substring(3,6)}-${str.substring(6)}`;
+}
+
+function GetUniqueArrayElements(arrs: number[][]): Array<number> {
+	return [...new Set(arrs.flat())];
+}
 
 /** num is > 0
  */

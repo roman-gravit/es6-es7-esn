@@ -531,10 +531,57 @@ Can be added via:
    
    ```
 
+###  Types of errors in JS 
+
+ - errors during web page loading: 
+   
+ - runtime error
+    
+ - logical error 
+    
+EvalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError, CustomError, ThrowError
+
+https://habr.com/ru/companies/piter/articles/695890/  [2018]   
+https://habr.com/ru/companies/reksoft/articles/518050/ [2020]
+
 
 ###  What is Babel
 
 Transpiler trasform new code (ECMA) to old variants for cross browser compatibility
+
+ 
+###  Memoization
+    
+It does this by storing computation results in cache, and retrieving that same information from the cache
+
+the next time it's needed instead of computing it again.
+
+In the next function call - function will not be recalculated - it just return the data from cache.
+   ```
+   const fib = (n, memo) => {
+      memo = memo || {};
+
+      if (memo[n]) {
+         return memo[n];
+      }
+
+      if (n <= 1) {
+         return 1;
+      }
+      return memo[n] = fib(n-1, memo) + fib(n-2, memo);
+   }
+
+   ```
+
+###   Cookie / sessionStorage / localStorage
+
+|                |   cookie    | sessionStorage    | localStorage  
+|----------------|:-----------:|------------------:|---------------:|
+|    creator     |  server     |    client         |   client       |    
+|    storied     |  manualy    | before tab closed |  forever       |    
+| domain check   |   +         |      -            |        -       | 
+|    capacity    |   4kb       |        5mb        |    5-10mb      | 
+|   avialiable   | browser     |    current tab    |    browser     |  
 
 
 ##  Data types, operators
@@ -748,9 +795,9 @@ Which return other function OR take function as input parameter.
   
   - arrow function cannot be used as a constructor
   
-  - arrow has no arguments property
+  - arrow has no *arguments* property
   
- - can be used as class methods, and can be called as callbacks.
+  - can be used as class methods, and can be called as callbacks.
  
 In this case *this* will not be lost:
 
@@ -1016,6 +1063,22 @@ Objects compared by reference. References(address in memory) are different for d
  - DEEP COPY: After change the original object - copy will NOT change.
     ``` {...original} | Object.assign(null, original) | JSON.parse(JSON.stringify(original)) ```
 
+
+###  Immutable in JS        
+
+Immutable - object cannot be changed after its creation: ```Object.freeze();```
+   
+Pro: 
+  - easy of object compare
+  - easy of use and test
+  - may be increase of performance
+    
+Contra: 
+  - may be increase of performance
+
+https://habr.com/ru/companies/developersoft/articles/302118/
+
+
 ###  What is function call chaining
 
 Object methods are called after each other => ```calculator.add(1).divide(2).add(3)```
@@ -1085,6 +1148,25 @@ Object wrapper - during runtime, primitive is temporary wrapped to his objects s
  - **for..of** : working with VALUES
     
 For..of can work with Map() and Set()
+
+
+###  Diff between *in*  and *hasOwnProperty* - check if the property exists
+   
+ - *in* : check in prototype also 
+    
+ - *hasOwnProperty* : do NOT check in prototype 
+
+
+###  Diff between typeof and instanceof 
+
+ - typeof: determine the type of primitive
+   
+ - instanceof: is working on prototype level. Test if right operand was set in the chain of prototypes.
+   Only for objects.
+ 
+https://habr.com/ru/articles/675684/ [2022]    
+https://habr.com/ru/articles/427253/  [2018]
+https://dev.to/danhjoo7/the-differences-between-typeof-and-instanceof-in-oo-js-317f
 
 
 ###  Promise
@@ -1183,24 +1265,27 @@ From target elelent to its all parents. You can stop bubbling in every parent ev
  - beforeUnload / Unload
 
 
-###  Types of nodes in the DOM tree (12)
-   - ELEMENT_NODE            1      <div>  <span> 
+###  Types of nodes in the DOM tree
+   - ELEMENT_NODE            1      ```<div>  <span>``` 
    - ATTRIBUTE               2      "id" "type" 
    - TEXT                    3      Text inside element
    - CDATA_SECTION           4      Represents a CDATA section in a document (text that will NOT be parsed by a parser)
-   - PROCESSING_INTSRUCTION  7      <?xml version="1.0"?>
-   - COMMENT                 8       <!-- -->
+   - PROCESSING_INTSRUCTION  7      ```<?xml version="1.0"?>```
+   - COMMENT                 8      ```<!-- -->```
    - DOCUMENT                9      window.document
-   - DOCUMENT_TYPE          10      <!doctype>
+   - DOCUMENT_TYPE          10      ```<!doctype>```
    - DOCUMENT_FRAGMENT      11   
-   
+      
+The **DocumentFragment** interface represents a minimal document object that has no parent.
+
+It is used as a lightweight version of Document that stores a segment of a document structure comprised of nodes just like a standard document. 
+
+The key difference is due to the fact that the document fragment isn't part of the active document tree structure. 
+
+Changes made to the fragment don't affect the document.
+
    https://habr.com/ru/articles/413287/   https://javascript.ru/optimize/documentfragment-0
-   
-   Фишка заключается в том, что когда documentFragment вставляется в DOM - то он исчезает, 
-     а вместо него вставляются его дети. Это единственное и основное свойство documentFragment 
-     по сравнению со всеми остальными сущностями DOM.
-     Но операция вставки в "живой" DOM дорогая. И тут на помощь приходит как раз documentFragment. 
-     Можно вставлять в него, а уже потом его добавить в DOM.
+
 
    - ENTITY_REFERENCE        5  (!!! legacy)
    - ENTITY                  6  (!!! legacy)
@@ -1254,23 +1339,21 @@ https://www.youtube.com/watch?v=rhvec8cXLlo
 
 ###  How to add event handler for DOM element 
 
- - INLINE event handler     <button onclick="...">
+ - INLINE event handler     ```<button onclick="...">```
        You cannot set 2 event handlers
 
- - Event handler property:  btn.onclick = functon...
+ - Event handler property  ```btn.onclick = functon...```
        You cannot set 2 event handlers
    
- - addEventListener         btn.addEventListener("click", callback)
+ - addEventListener        ```btn.addEventListener("click", callback)```
    
    addEventListener(eventType, listener, caprture / {options})
-      - capture(default=false): Если равно true, useCapture указывает, что пользователь желает начать захват. 
-                                После инициализации захвата все события указанного типа будут отправлены в 
-                                зарегистрированный listener перед отправкой в какой-либо EventTarget под ним в дереве DOM
-      - options. Объект options, который определяет характеристики объекта, прослушивающего событие.
+      - capture(default=false): If true, useCapture show that user wants to capture event. 
+      - options object
                  - capture
-                 - once   Boolean указывает, что обработчик должен быть вызван не более одного раза после добавления. 
-                          Если true, обработчик автоматически удаляется after call.
-                 passive  true - что обработчик никогда не вызовет preventDefault(). 
+                 - once   Boolean handler will be called only once. 
+                          If *true*, handler will be automatically removed after call.
+                 passive  true - handler will never call preventDefault(). 
    
    REMOVE:  removeEventListener("click", callback)
 
@@ -1353,8 +1436,33 @@ Its the first line in the html document.
 
  - SEO(Search Engine Optimization) information (author, keywords, description)
 
-   https://www.ashmanov.com/education/articles/seo/
+https://www.ashmanov.com/education/articles/seo/
 
+
+###  What is written  inside *head*
+```
+    <meta>  :   code type, add SEO information(description, keywords, author)
+                viewport - for responsive design 
+    <title> :   title of the page 
+    <link>  :   universal tag for linking data (icons, CSS)  via attribute *rel*, Google fonts
+                *rel*  *href* attributes
+    <style> :   internal CSS
+    <script> :  internal JS
+    <script  src=""> : external JS
+
+    You can put conditions comments in <body>:
+    <!-- [if IE]>
+        <p>Hello IE</p>
+    <![endif]-->
+
+    Note1: *hreflang*  specifies the language of the document in the link: 
+            <a href="https://www.w3schools.com" hreflang="en">W3Schools</a>
+    
+    Note2:  *rel* attribute specifies the relationship between the current document and the linked document.
+            <a rel="nofollow" href="https://www.w3schools.com/">W3Schools.com</a>
+            bookmark   tag    search  prev   noreferrer noopener  nofollow  next  license  help external
+            author    alternate
+```
 
 ###  What is semantic
 
@@ -1376,6 +1484,30 @@ Check document for W3C standarts:
  - check DTD
     
  - check for correctness tags and attributes
+
+
+###  Text tags 
+
+```
+   <h1 align=""> -- <h6 align=""> 
+   <p  align="">
+   <hr>                 => draw line     [non semantic]
+   <br>                 => break line    [non semantic]
+   <address>            => Info about author
+   <q>                  => quote of somebody text
+   <blockquote>         => big quote text from somebody
+   <time>
+
+   Text decoration
+   <b> <i> <tt> <s>     => This will be not read by robot  [non semantic]
+   <strong> <em>        => HTML5 semantic tags
+   <del>    <ins>       => HTML5 semantic tags
+
+   <code>               => to show program code
+   <pre>                => preformatted text. formatting will not change
+   <small> <big>        => logicaly show the part of the text in the sentence
+   <sub> <sup>          => for formulas: pow  n^2
+```
 
 
 ###  Button                                 
@@ -1577,3 +1709,423 @@ less priority thing will be done and in this manner, work will be completed.
 Approach for creating async apps using cleint-server request-response.
 
 Update web content without reloading the whole page.  Use XmlHttpRequest(legacy) or fetch.
+
+Pro: 
+ - dynamic add data from server without refreshing the whole page
+   
+ - decrease server calls
+   
+ - state of the page is not changed 
+
+Contra: 
+ - does not work without JS
+    
+ - dynamic content is not visible for some robots
+
+
+###  How dynamically add elements to the HTML page
+    
+ - document.createElement
+    
+ - document.createTextNode
+    
+ - document.appendChild
+
+
+###  What is web-components and their technologies
+
+This is a suite of different technologies allowing you to **create reusable custom elements** 
+
+with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.
+   
+Web Components consists of three technologies used together:
+   
+**Custom Elements**
+
+This technology allows us to extend the HTML and lets us define our own tags. It can even extend the components developed on different frameworks. 
+
+Using custom elements, we have flexibility by using a bottom-up approach with HTML elements or build upon the native HTML elements to reuse the functionality.
+
+```<counter-element start="3"></counter-element>```
+
+Lifecycle Methods:
+
+ - constructor() : It’s called when the component is first initialized. It must call super() and can set any defaults or perform other pre-rendering processes.
+
+ - static observedAttributes() : Returns an array of attributes that the browser will observe.
+
+ - attributeChangedCallback(propertyName, oldValue, newValue) : Called whenever an observed attribute is changed. 
+                           Those defined in HTML are passed immediately, but JavaScript can modify them.
+
+ - connectedCallback() : This function is called when the Web Component is appended to a DOM. It should run any required rendering
+
+ - disconnectedCallback() : It’s called when the Web Component is removed from a DOM.
+
+ - adoptedCallback() : This function is called when a Web Component is moved from one document to another. 
+
+
+**Shadow DOM**
+
+This allows the web browsers to render DOM, by not adding it in the main document DOM tree. 
+It protects the markup structure, behaviour, and style of the component from another code, enabling the code to work independently. 
+Elements can create shadow DOM in the constructor which will eliminate the use of `connnetedCallBack`.
+
+While the Web Component we’ve built above works, it’s not immune to outside interference, and CSS or JavaScript could modify it. 
+Similarly, the styles you define for your component could leak out and affect others.
+
+The Shadow DOM solves this encapsulation problem by attaching a separated DOM to the Web Component with:
+
+``` const shadow = this.attachShadow({ mode: 'closed' }); ```
+
+*open* : JavaScript in the outer page can access the Shadow DOM (using Element.shadowRoot)
+*closed* : the Shadow DOM can only be accessed within the Web Component.
+
+
+**HTML template**
+
+This enables us to insert HTML elements into the browser. Now, these are widely supported by Google Chrome, 
+Mozilla Firefox, Safari, Opera and Microsoft Edge. To enable backward compatibility, we can use polyfill which is a 
+JavaScript library implementing HTML5 web standards.
+
+https://kinsta.com/blog/web-components/  https://habr.com/ru/articles/443032/ [2019]
+https://habr.com/ru/articles/761586/ [2023]  https://habr.com/ru/articles/546980/  [2021]
+
+
+###  How to decrease the loading time of the webpage
+   
+  - minimize/concat of the css
+   
+  - minimize/obfuscate of the JS
+
+  - image optimization, css sprites
+   
+  - use of CDN(content delivery network): CDN can stand for content delivery network  or content distribution network of the servers.
+
+  - use of gzip compressions on server side
+   
+  - caching (on both sides)
+
+###  Why is a good practice to pit *link* for css loading inside HEAD and *script* for scripts loading before closing *body*
+    
+Tha main UX task to show something to use as fast as possible. There are two reasonable options: before or after the rendered HTML. 
+   
+  - HEAD: I can think of only esthetic reasons...
+
+  - END OF BODY (or defer)
+      When a script is placed after rendered HTML, the DOM is sure to be parsed and ready to be manipulated when the script is executed. 
+      
+      However, if a script tag includes either async or defer attribute the browser continue  parsing HTML while loading the script.
+
+      1) *async* script is executed as soon as it is loaded, potentially before the DOM is completed.
+      2) *defer* script is executed after the DOM is built. At that stage document.readyState is interactive. 
+          When all deferred scripts are executed DOMContentLoaded event is fired.
+      
+      *defer* attribute is not used with JavaScript modules because they are deferred by default ```<script type="module">```
+
+      !! you can put defer attribute to *script* and put it to the *head*
+
+      https://medium.com/geekculture/where-to-put-a-script-tag-into-head-or-body-end-b5b063058e0b 
+
+
+###  Main phases of checking if HTML document is valid
+    
+  - DTD validation  (doctype)
+   
+  - Syntax validation of the used ```<tags...>```
+    
+  - Check for wrong elements
+
+
+###  Consider HTML5 as an open web platform. What are the building blocks of HTML5
+   
+   - Semantics:       HTML tags describe the content
+   
+   - Styling:         Customizing appearance of HTML tags
+   
+   - Device access:   Allows for the usage of various input and output devices.
+   
+   - Connectivity:    Communicate with the server in new and innovative ways.
+   
+   - Offline and storage: Allows webpages to store data on the client-side locally and operate offline more efficiently.
+   
+   - Multimedia:      Audio/ video content
+   
+   - 2D/3D graphics and effects: Allows a much more diverse range of presentation options
+   
+   - Performance and integration: Provides greater speed optimization and better usage of computer hardware.
+
+###  What are the features of the multilanguage sites
+   
+   - use lang tag HTML
+   
+   - redirect user to the page with needed language
+   
+   - language text direction
+   
+   - format data and currency
+   
+   - use text limits  (... or more button to read the remaining)
+   
+   - word order in the sentence
+
+
+###  Diff between innerHTML and outerHTML 
+
+   ```
+                       |------innerText------| 
+  <div id="testdiv"><p>Text insude element Div</p></div>
+  |                 |                             |    |
+  |                 |--------innerHTML------------|    |
+  |                                                    |        
+  |---------------------outerHTML----------------------|
+
+  ```
+
+###  Global site structure                      
+```
+   <header>
+      <nav>  navigation with priority links
+    ---------------------
+   <main>                |     
+      <section>          |
+         <article>       |  <aside>
+         <article>       |
+         <article>       |
+      <section>          |
+        <article>        |
+   ----------------------
+   <footer>
+```
+
+###  Forms                                     
+
+```
+   Simple Form
+   <form  action="serverurl" name="..."  autocomplete="on">
+     <fieldset>
+        <legend>  title 
+
+        <label for="id1"> <input id="id1">
+
+        <textarea rows=""  cols="">  if more col/row - it will be bigger in size
+          - autofocus  -disabled  -readonly   -placeholder  -required  -maxlength
+
+        <select [multiple]>
+           <option>
+           <option>
+           <optgroup>
+              <option value=""  [selected]>  - value will be send to server
+              <option value=""  [disabled]>
+        <input>
+```
+
+###  Audio Video                               
+
+```
+    Universal mp3  mp4
+    <audio>
+        <source src="" type="audio/wav">
+        <source src="" type="audio/mp3">
+    </audio>
+
+    <video>
+        <source src="" type="video/ogg">
+        <source src="" type="video/mp4">
+    </video>
+
+    attributes:
+        - preload   auto | metadata | none
+        - autoplay
+        - muted:     sound will be off after page load
+        - controls
+        - loop
+        - width   (video)
+        - height  (video) 
+        - poster  (video)   show prevew before video
+```
+
+
+###  Meta tag name=viewport
+
+Used for responsive version of the site.
+    
+``` <meta name="viewport" content="width=device-width, initial-scale=1" /> ```
+
+width and height:
+      Controls the size of the viewport. It can be set to a specific number of pixels like width=600 
+      or to the special value device-width, which is 100vw (100vh), or 100% of the viewport width. Minimum: 1. 
+      Maximum: 10000. Negative values: ignored.
+
+initial-scale:
+      Controls the zoom level when the page is first loaded. 
+      Minimum: 0.1. Maximum: 10. Default: 1. Negative values: ignored.
+
+minimum(maximum)-scale:
+      Controls how much zoom out is allowed on the page. 
+      Minimum: 0.1. Maximum: 10. Default: 0.1. Negative values: ignored.
+
+user-scalable:
+      Controls whether zoom in and zoom out actions are allowed on the page. 
+      Valid values: 0, 1, yes, or no. Default: 1, which is the same as yes. 
+      Setting the value to 0, which is the same as no, is against Web Content Accessibility Guidelines (WCAG).
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag
+
+
+### What are the content categories in HTML5 
+
+Each element can be placed in several catefories with common properties.
+Also can be a situation that element does not have any category.
+
+Main **content categories**:
+
+  - METADATA:  ```<base>, <link>, <meta>, <noscript>, <script>, <style> и <title>```
+     
+  - FLOW CONTENT: div, span, a .....
+
+  - SECTIONING CONTENT: header footer aside nav article
+
+  - HEADING CONTENT:  ```<h1>-<h6> and <hgroup>```
+
+  - Phrasing content:  marl  label   q   button 
+
+  - Embedded content: audio video 
+
+  - Interactive content: button select 
+
+  - Palpable content:  Content is palpable when it's neither empty nor hidden;
+
+  - Form-associated content: inside *form*
+
+https://developer.mozilla.org/ru/docs/Web/HTML/Content_categories
+
+
+###  What is canvas and SVG 
+
+ - canvas:  HTML5 element for drawing graphics.
+   Raster graphics. No file format. Has events. For graphics.
+   Pro: can be saved in PNG/JPG good for Raster graphics.
+
+ - SVG: xml for 2D vector graphics, for stand and animated graphics.
+   .svg file format.
+   No events.  
+   Pro: Images not depending on resolution.
+          good animation
+          xml format
+   Contra: 
+          slow speed for complex images
+
+https://habr.com/ru/companies/ruvds/articles/476292/   https://habr.com/ru/companies/simbirsoft/articles/332750/
+
+
+###  autocomplete attribute 
+
+The autocomplete attribute specifies whether a form or an input field should have autocomplete on or off.
+
+Autocomplete allows the browser to predict the value. When a user starts to type in a field, 
+
+The browser should display options to fill in the field, based on earlier typed values.
+
+
+###  HTML element <output>
+
+The *output* tag is used to represent the **result of a calculation** (like one performed by a script).
+     
+```<form oninput=result.value=parseInt(a.value)+parseInt(b.value)>```
+
+
+###  Property valueAsNumber in HTML for form elements
+
+For Form elements to parse string value from input as number. No need to use parseInt.
+
+
+###  Link and target attribute
+
+```
+   <a  href="url">:              simple link  
+   <a  href="url" download>:    dpwnload link
+   <a  href="url" target="">
+   <a  href="tel:+123-12-12" >
+   <a  href="mailto:test@test.com" >  Email client
+   <a  href="skype:test" >  Skype
+   <a  href="#id" >  id to which page will be scolled onclick
+
+  target attribute:
+     By default in the SAME tab or frame.
+     _blank:   new TAB
+     _parent:  parent frame or self if there is no parent
+     _self:    current TAB
+     _top:     aka _self
+   
+```
+
+###  What is application cache in HTML5  
+
+The current version of HTML5 introduces application cache, which means that a web application is cached, and accessible without an internet connection. 
+
+Now we can make an offline web application that will run without an internet connection by just creating a manifest file in our application. 
+
+```<html manifest="manifest.appcache">```
+
+```
+CACHE MANIFEST
+# 23-01-2015 v0.1
+/style.css
+/logo.gif
+/script.js
+ 
+NETWORK:
+*
+ 
+FALLBACK:
+/server/ /fallback.html
+```
+
+
+https://habr.com/ru/articles/151815/  [2012]    
+https://habr.com/ru/companies/paysto/articles/254619/ [2015]
+https://habr.com/ru/articles/788786/ [2024]  Cache API (ServiceWorker)
+
+
+###  Useful tags                               
+```
+   <abbr> abbreviation  => show tooltip on mouseover  Ex: HTML
+
+   <input list="list">   -> set connection with datalist
+   <datalist id="list">  dropdown list
+     <option>
+     <option>
+
+    Visualization of the values in diaposon:
+   <meter value="20"  min="1"  max="100"  low="10" high="70">Progress</meter>
+    - low, high: depending on these values element will change colors to show low/high
+
+    Progress of the action:
+   <progress  value="30" max="100"> 
+     - always blue progress line
+
+    Select with yellow some fragment of text
+    <mark>Select</mark>
+
+    HTML5 element and API for drawing graphics
+    <canvas>
+```
+
+
+###  Universal attribute                       
+
+Can be applyed to most of the tags
+  - id 
+  - class 
+  - title               tootlip with text
+  - style               inline style
+  - contenteditable
+  - spellcheck          for input textarea 
+  - hidden 
+  - tabindex            focus index order
+  - dir                 direction: change text direction
+  - land                include language 
+                        for example quotes will be different for diff languages
+
+
+
