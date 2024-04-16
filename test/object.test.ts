@@ -1,3 +1,89 @@
+
+test("Object.values", () => {
+
+	//output:  B: A    B: B
+	{
+		class A {
+			name: string;
+			constructor() {
+				// will be called from B constructor and pass *this* as B
+				if(!(this instanceof B)) {
+					throw new Error("incorrect object instance");
+				}
+				this.name = "A";
+				// since *this* is B and B has its own getName: it will be called inside B object
+				this.getName();
+			}
+	
+			getName() {
+				console.log("A: " + this.name);
+			}
+		}
+	
+		class B extends A {
+			name: string;
+			constructor() {
+				// The super keyword is used to access properties on an object literal or class's [[Prototype]]
+				// or invoke a superclass's constructor.
+				super();
+				this.name = "B";
+				this.getName();
+			}
+	
+			getName() {
+				console.log("B: " + this.name);
+			}
+		}
+	
+		const obj = new B();
+		console.log(obj);
+	
+		// output:  B: A    B: B
+	}
+
+
+	// output:  A: A    B: B
+	{
+		class A {
+			name: string;
+			constructor() {
+				// will be called from B constructor and pass *this* as B
+				if(!(this instanceof B)) {
+					throw new Error("incorrect object instance");
+				}
+				this.name = "A";
+				// since *this* is B and B has NOT its own getName: it will be called inside A object
+				this.getName1();
+			}
+	
+			getName1() {
+				console.log("A: " + this.name);
+			}
+		}
+	
+		class B extends A {
+			name: string;
+			constructor() {
+				// The super keyword is used to access properties on an object literal or class's [[Prototype]]
+				// or invoke a superclass's constructor.
+				super();
+				this.name = "B";
+				this.getName();
+			}
+	
+			getName() {
+				console.log("B: " + this.name);
+			}
+		}
+	
+		const obj = new B();
+		console.log(obj);
+	
+		//output:  A: A    B: B
+	}
+
+});
+
 // The Object.getOwnPropertyDescriptors() static method returns all own property descriptors of a given object.
 test("Object.values", () => {
 
