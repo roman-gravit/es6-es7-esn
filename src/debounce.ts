@@ -1,4 +1,4 @@
-export { ShowLastFetch, ShowLastFetchWithBob };
+export { ShowLastFetch, ShowLastFetchWithBob, curry };
 
 const fetchUrl = function (url: string) {
 	console.log(`fetching ${url}...`);
