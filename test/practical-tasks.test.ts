@@ -1,9 +1,44 @@
 import { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringToInitials, 
 	StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexReduce, 
-	StringDuplicateIndexMap, FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber, 
-	GetUniqueArrayElements, CreatePhoneNumber, FindStringVowels, CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap } from "../src/practical-tasks";
+	StringDuplicateIndexMap, FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber, GetTwoDigitsArrayIndeces,
+	GetUniqueArrayElements, CreatePhoneNumber, FindStringVowels, CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap,
+	GetTwoDigitsArrayIndecesMemo } from "../src/practical-tasks";
 
 	
+test("TestArrowFunwiotn", () => {
+	class Test {
+		name = "Test1";
+		methodFunction() {
+			console.log(`METHOD ${this.name}`);
+			return this;
+		}
+		arrowFunction = () => {
+			console.log(`ARROW ${this.name}`);
+			return this;
+		}
+	}
+
+	const instance = new Test();
+	console.log(instance.methodFunction() instanceof Test);
+	console.log(instance.arrowFunction() instanceof Test);
+
+	const someObject = {
+		arrowProperty: instance.arrowFunction,
+		methdodProperty: instance.methodFunction
+	}
+	console.log(someObject.arrowProperty() instanceof Test);
+	console.log(someObject.methdodProperty() instanceof Test);
+
+
+});
+
+test("GetTwoDigitsArrayIndeces", () => {
+	expect(GetTwoDigitsArrayIndeces([4, 9, 7, 3, 5], 8)).toEqual([3, 4]);
+});
+
+test("GetTwoDigitsArrayIndecesMemo", () => {
+	expect(GetTwoDigitsArrayIndecesMemo([4, 9, 7, 3, 5], 8)).toEqual([3, 4]);
+});
 
 test("CapitalizeFirstWordLetter", () => {
 	expect(CapitalizeFirstWordLetterFor("a asd dfg  d asdasdads")).toEqual("A Asd Dfg  D Asdasdads");

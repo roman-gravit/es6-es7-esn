@@ -1,4 +1,4 @@
-export { ShowLastFetch, ShowLastFetchWithBob, curry };
+export { ShowLastFetch, ShowLastFetchWithBob, ShowLastFetchWithBob2 };
 
 const fetchUrl = function (url: string) {
 	console.log(`fetching ${url}...`);
@@ -72,7 +72,33 @@ function debounce2(func: Function, delay: number) {
 
 function ShowLastFetchWithBob() {
 
-	const fetching = debounce2(fetch_bind, 0);
+	const fetching = debounce2(fetch_bind, 100);
+
+	fetching(1);
+	fetching(2);
+	fetching(3);
+	fetching(4);
+	fetching(5);
+}
+
+function debounce3(func: Function, delay: number) {
+	let timer: any;
+
+	return (...args: number[]) => {
+		if(timer) {
+			clearTimeout(timer);
+			timer = undefined;
+		}
+
+		timer = setTimeout(()=> {
+			func(args);
+		}, delay);		
+	}
+}
+
+function ShowLastFetchWithBob2() {
+
+	const fetching = debounce3(fetch_bind, 100);
 
 	fetching(1);
 	fetching(2);

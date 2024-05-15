@@ -5,6 +5,32 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Web Component</title>
 	<script type="module" src="./web-component.js"></script>
+	<style>
+		.box {
+			position: fixed;
+			height: 100px;
+			width: 100px;
+		}
+
+		.red {
+			background-color: red;
+			left: 150px;
+			top: 150px;
+			z-index: 30;
+		}
+		.blue {
+			background-color: blue;
+			left: 180px;
+			top: 130px;
+			z-index: 200;
+		}
+		.green {
+			background-color: green;
+			left: 100px;
+			top: 100px;
+			z-index: 20;
+		}
+	</style>
 </head>
 <body>
 	<hello-world></hello-world>
@@ -15,5 +41,12 @@
 	<template>
 		<p>The <slot name="whats-coming">Zombies</slot> are coming!</p>
 	</template>
+
+	
+	<div class="box red">
+		<div class="box blue"></div>
+	</div>
+	
+	<div class="box green"></div>
 </body>
 </html>

@@ -1,8 +1,51 @@
 export { IsPalindrome, IsPalindromeIgnoreSpecialSymbols, FindShortestWordSplitFor, FindShortestWordSort, StringDuplicateIndexReduce,
 	StringToInitials, StringToInitialsMap, SumDigits, GetMinMaxInArray, GetMinMaxInArraySort, GetMinMaxInArrayMath, StringDuplicateIndexMap,
 	FindStringCapitalLettersForLoop, FindStringCapitalLettersReduce, FooBarNumber, GetUniqueArrayElements, CreatePhoneNumber, FindStringVowels,
-	CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap };
+	CapitalizeFirstWordLetterFor, CapitalizeFirstWordLetterMap, GetTwoDigitsArrayIndeces, GetTwoDigitsArrayIndecesMemo };
 
+function GetTwoDigitsArrayIndecesMemo(arr: Array<number>, num: number): [number, number] {
+
+	const cache= new Map<number, number>();
+	
+	for(let i = 0; i < arr.length; i++) {
+		const current = arr[i];
+		const needed = num - current;
+
+		// try to find it in the cache
+		if(!cache.has(needed)) {
+			cache.set(current, i);
+		} else {
+			return [cache.get(needed)||0, i];
+		}
+	}
+
+
+	return [-1, -1];
+}
+
+function GetTwoDigitsArrayIndeces(arr: Array<number>, num: number): [number, number] {
+	
+	for(let i = 0; i < arr.length-1; i++) {
+		const current = arr[i];
+		
+		// try to find in array num-arr[i]
+		const second_index = arr.findIndex((second, index) => {
+			if(index<=i) {
+				return false;
+			}
+			return second===(num-current);
+		}
+		);
+		if(second_index===-1) {
+			continue;
+		} 
+
+		return [i, second_index];
+	}
+	
+	
+	return [-1, -1];
+}
 
 function CapitalizeFirstWordLetterFor(str: string): string {
 	// Variant 1: check every symbol

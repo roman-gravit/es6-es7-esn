@@ -1,5 +1,6 @@
 
-import { ShowLastFetch, ShowLastFetchWithBob } from "./debounce";
+import { ShowLastFetch, ShowLastFetchWithBob, ShowLastFetchWithBob2 } from "./debounce";
 
-ShowLastFetch();
-ShowLastFetchWithBob();
+//ShowLastFetch();
+//ShowLastFetchWithBob();
+ShowLastFetchWithBob2();
