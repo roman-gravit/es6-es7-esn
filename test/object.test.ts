@@ -1,6 +1,63 @@
 
 test("Object.values", () => {
 
+	type Person = {
+		name?: string;
+		age?: number;
+	}
+	function _merge<T extends Person>(a: T, b: T): T {
+		return Object.assign({}, a, b);
+	}
+
+	const merged = _merge( {name: "Mike"}, {age: 30} );
+	
+	console.log(merged.name);
+
+	type A = { 
+		name: string;
+	}
+	
+	interface I  extends A { 
+		age: number;
+	}
+
+	type  B  = I & {
+		color: string;
+	}
+
+	type  C  = I & B;
+
+	interface I2  extends C { 
+		age: number;
+	}
+
+	interface I1 { 
+		age: number;
+	}
+
+	class Person2 implements A {
+		name: string;
+		constructor() {
+			this.name = "11";
+		}
+	}
+
+	function _test(): B {
+		return {
+			name: "Mike",
+			age: 25,
+			color: "red"
+		}
+	}
+
+	const obj1 = {};
+	const obj2 = {};
+	console.log(obj1==obj2);
+	console.log(obj1===obj2);
+});
+
+test("Object.values", () => {
+
 	//output:  B: A    B: B
 	{
 		class A {
