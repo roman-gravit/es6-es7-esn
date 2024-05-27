@@ -1,5 +1,5 @@
 
-test("Object.values", () => {
+test("Object.values", async () => {
 
 	type Person = {
 		name?: string;
@@ -50,10 +50,32 @@ test("Object.values", () => {
 		}
 	}
 
-	const obj1 = {};
-	const obj2 = {};
-	console.log(obj1==obj2);
-	console.log(obj1===obj2);
+	//const obj1 = {};
+	//const obj2 = {};
+	//console.log(obj1==obj2);
+	//console.log(obj1===obj2);
+
+	function callback(res: string) {
+		console.log("Then:" + res);
+	}
+
+	const pm = new Promise<string>((resolve) => {
+		//setTimeout(()=> {
+			console.log("before");
+			resolve("promise resolve")
+			console.log("after");
+		//}, 0)
+	});
+
+	console.log("after promise new");
+
+	// here the callback is adding to microtask and 
+	// code goes to the next l
+	pm.then(callback);
+
+	console.log("final");
+
+	
 });
 
 test("Object.values", () => {
