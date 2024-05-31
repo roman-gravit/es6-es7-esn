@@ -106,3 +106,47 @@ function ShowLastFetchWithBob2() {
 	fetching(4);
 	fetching(5);
 }
+
+
+//console.log("1");  // sync = 1 
+
+//setTimeout(()=>console.log("2"));  // macro = 4
+
+//setTimeout(()=>{
+//	console.log("3"); // macro = 5
+//	Promise.resolve().then(()=>console.log("3.1"));  // micro = 6
+//}, 0);  
+
+//Promise.resolve().then(()=>console.log("4"));   // micro = 3
+
+//setTimeout(()=>console.log("5"));  // macro = 7
+
+//console.log("6");    // sync = 2
+
+// 1 6 4 3 3.1 2 5
+
+type callback = (n: number) => void;
+function debounce5(fn: callback, delay: number): any {
+	let timer: any;
+	return function(n: number) {
+		if(timer) {
+			clearTimeout(timer)
+		}
+		timer = setTimeout(() => {
+			fn(n)	
+		}, delay);
+
+	}
+}
+
+function logNumber(n: number): void {
+	console.log(n);
+}
+const test5 = debounce5(logNumber, 100);
+
+
+test5(10);
+test5(12);
+test5(14);
+test5(16);
+test5(20);

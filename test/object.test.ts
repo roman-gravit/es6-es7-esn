@@ -1,4 +1,110 @@
 
+test("Object.copy", () => {
+
+	const obj_test= {
+		name: "Mike",
+		age: 20,
+		testNull: null,
+		testUndefined: undefined,
+		address: {
+			city: "Paris",
+			street: "Rua"
+		},
+		test:  function(): string { 
+			console.log(this.name);
+			return this.name;
+		}
+	}
+
+	// ...spread (SHALLOW)
+	{
+		const copy = {...obj_test};
+		expect(copy.name).toBe(obj_test.name);
+		expect(copy.age).toBe(obj_test.age);
+		expect(copy.testNull).toBe(obj_test.testNull);
+
+		expect(copy.testUndefined).toBe(obj_test.testUndefined);
+		expect(copy).toHaveProperty("testUndefined");
+
+		// address will be the same ref
+		expect(copy.address).toBe(obj_test.address);
+		expect(copy.address).toEqual(obj_test.address);
+
+		expect(copy).toHaveProperty("test");
+		expect(copy.test()).toBe(obj_test.name);
+	}
+
+	// assign (SHALLOW)
+	{
+		const copy = Object.assign({}, obj_test);
+		expect(copy.name).toBe(obj_test.name);
+		expect(copy.age).toBe(obj_test.age);
+		expect(copy.testNull).toBe(obj_test.testNull);
+
+		expect(copy.testUndefined).toBe(obj_test.testUndefined);
+		expect(copy).toHaveProperty("testUndefined");
+
+		// address will be the same ref
+		expect(copy.address).toBe(obj_test.address);
+		expect(copy.address).toEqual(obj_test.address);
+
+		expect(copy).toHaveProperty("test");
+		expect(copy.test()).toBe(obj_test.name);
+	}
+
+	// json (DEEP)
+	{
+		const copy = JSON.parse(JSON.stringify(obj_test));
+		expect(copy.name).toBe(obj_test.name);
+		expect(copy.age).toBe(obj_test.age);
+		expect(copy.testNull).toBe(obj_test.testNull);
+
+		// undefined will be lost in JSON
+		expect(copy.testUndefined).toBe(obj_test.testUndefined);
+		expect(copy).not.toHaveProperty("testUndefined");
+
+		// addresses will have different references 
+		expect(copy.address).toEqual(obj_test.address);
+		expect(copy.address).not.toBe(obj_test.address);
+
+		// methods will be lost in JSON
+		expect(copy).not.toHaveProperty("test");
+	}
+
+	// structuredClone  (DEEP)
+	{
+		// throw an error of functions in object: functions are not serializable
+		const obj_test= {
+			name: "Mike",
+			age: 20,
+			testNull: null,
+			testUndefined: undefined,
+			address: {
+				city: "Paris",
+				street: "Rua"
+			}
+			//test:  function(): string { 
+			//	console.log(this.name);
+			//	return this.name;
+			//}
+		}
+	
+		const copy = structuredClone(obj_test);
+		expect(copy.name).toBe(obj_test.name);
+		expect(copy.age).toBe(obj_test.age);
+		expect(copy.testNull).toBe(obj_test.testNull);
+
+		expect(copy.testUndefined).toBe(obj_test.testUndefined);
+		expect(copy).toHaveProperty("testUndefined");
+
+		// addresses will have different references 
+		expect(copy.address).toEqual(obj_test.address);
+		expect(copy.address).not.toBe(obj_test.address);
+
+	}
+
+});
+
 test("Object.values", async () => {
 
 	type Person = {
@@ -75,7 +181,8 @@ test("Object.values", async () => {
 
 	console.log("final");
 
-	
+
+
 });
 
 test("Object.values", () => {
