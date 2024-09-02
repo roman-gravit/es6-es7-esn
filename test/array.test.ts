@@ -1,3 +1,22 @@
+import { SearchBinary } from "../src/search";
+
+test("Binary.Search", () => {
+	const arr0 = Array<number>();
+	expect(SearchBinary(arr0, 2)).toBe(-1);
+
+	const arr1 = [1];
+	expect(SearchBinary(arr1, 2)).toBe(-1);
+
+	const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	expect(SearchBinary(arr, 2)).toBe(1);
+	expect(SearchBinary(arr, 8)).toBe(7);
+	expect(SearchBinary(arr, 1)).toBe(0);
+	expect(SearchBinary(arr, 9)).toBe(8);
+	expect(SearchBinary(arr, 5)).toBe(4);
+	expect(SearchBinary(arr, 4)).toBe(3);
+	expect(SearchBinary(arr, 5)).toBe(4);
+});
+
 
 // The flat() method of Array instances creates a new array with all sub-array elements 
 // concatenated into it recursively up to the specified depth.

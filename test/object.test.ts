@@ -1,6 +1,43 @@
 
 test("Object.copy", () => {
 
+	enum PersonRole {
+		"USER",
+		"ADMIN",
+		//"MANAGER"
+	}
+
+	class NeverError extends Error {
+		constructor(value: never) {
+			super(`Unreachable statement: ${value}`);
+		}
+	}
+	
+
+	function CheckRules(role: PersonRole): void {
+		switch (role) {
+			case PersonRole.ADMIN:
+				console.log("admin");
+				break;
+			case PersonRole.USER:
+				console.log("user");
+				break;
+			default:
+				throw new NeverError(role);	
+		}
+	}
+
+	let t = CheckRules(PersonRole.ADMIN);
+	console.log(t);
+
+	type  Test<T> = T extends string ? true : false;
+	//	^? 
+
+	type R = Test<"1">;
+	// ^?   
+
+	type R1 = Test<22>;
+
 	const obj_test= {
 		name: "Mike",
 		age: 20,
