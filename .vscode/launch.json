@@ -26,7 +26,8 @@
 			  "--runTestsByPath",
 			  "${relativeFile}",
 			  "--config",
-			  "jest.config.ts"
+			  "jest.config.ts",
+			  "--collect-coverage"
 			],
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen",
