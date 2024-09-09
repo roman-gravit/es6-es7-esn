@@ -1,4 +1,4 @@
-import { sort } from "../src/martin-sort";
+import { sort } from "../../src/tdd/martin-sort";
 
 describe("sort",  () => {
 

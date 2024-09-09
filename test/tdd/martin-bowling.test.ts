@@ -1,4 +1,4 @@
-import { Game } from "../src/martin-bowling-game";
+import { Game } from "../../src/tdd/martin-bowling-game";
 
 describe("bowlingGame",  () => {
 	test("canRoll", () => {

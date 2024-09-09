@@ -1,4 +1,4 @@
-import { sortBubble } from "../src/martin-bubble-sort";
+import { sortBubble } from "../../src/tdd/martin-bubble-sort";
 
 describe("sortBubble",  () => {
 

@@ -1,4 +1,4 @@
-import { Queue } from "../src/martin-queue";
+import { Queue } from "../../src/tdd/martin-queue";
 
 describe("QueueTest",  () => {
 

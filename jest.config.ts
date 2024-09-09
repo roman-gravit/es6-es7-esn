@@ -1,6 +1,8 @@
 import type { Config } from "@jest/types";
 
 const config: Config.InitialOptions = {
+	collectCoverage: true,
+    coverageReporters: ["json", "html"],
 	preset: "ts-jest",
 	testEnvironment: "node",
 	verbose: true,

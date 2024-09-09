@@ -1,4 +1,4 @@
-import { wrap } from "../src/martin-text-wrap";
+import { wrap } from "../../src/tdd/martin-text-wrap";
 
 describe("textWrap",  () => {
 

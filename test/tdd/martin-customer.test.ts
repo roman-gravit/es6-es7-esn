@@ -1,4 +1,4 @@
-import { RentalCalculator, VideoRegistry, VideoType } from "../src/martin-customer";
+import { RentalCalculator, VideoRegistry, VideoType } from "../../src/tdd/martin-customer";
 
 
 // Req 1: Day 1 -> fee is 1.5$  and 1 bonus point
@@ -77,3 +77,23 @@ describe("customer",  () => {
 	}
 
 });
+
+function* abc() {
+	yield 'а';
+	yield 'b';
+	return 'c';
+}
+
+const it = abc();
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+
+for(let entry of abc()) {
+	console.log(entry);
+}
+
+// Exclude from T those types that are assignable to U
+// type Exclude<T, U> = T extends U ? never : T;
+type T = Exclude<string|Date|null, string|Date>;

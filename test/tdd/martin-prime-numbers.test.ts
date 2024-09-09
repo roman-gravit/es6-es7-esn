@@ -1,4 +1,4 @@
-import { factorsOf } from "../src/martin-prime-numbers";
+import { factorsOf } from "../../src/tdd/martin-prime-numbers";
 
 describe("factorsOf",  () => {
 
