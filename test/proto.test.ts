@@ -77,10 +77,9 @@ test("__proto__prototype", () => {
 
 	//prototype
 	{
-
 		// Object doesnt have .prototype
-		const obj: any = {};
-		expect(obj["prototype"]).toEqual(undefined);
+		const obj: Object = new Object();
+		expect(obj.hasOwnProperty("prototype")).toBe(false);
 
 		// Array doesnt have .prototype
 		const arr: any = [];
