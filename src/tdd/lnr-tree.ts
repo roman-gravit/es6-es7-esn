@@ -1,4 +1,4 @@
-export { searchLNTTree, BinaryTreeNode, Result };
+export { searchLNTTree, BinaryTreeNode, Result, contains };
 
 class BinaryTreeNode<T> {
 	value: T;
@@ -35,6 +35,17 @@ function searchLNTTree<T>(root: BinaryTreeNode<T>, search: number, result: Resul
 	}
 } 
 
+function contains<T>(value: T, iterator: Iterator<T>): boolean {
+    let result: IteratorResult<T> = iterator.next();
+
+    while (!result.done) {
+        if (result.value == value) return true;
+
+        result = iterator.next();
+    }
+
+    return false;
+}
 
 /*
 class BinaryTreeNode<T> {
@@ -82,4 +93,23 @@ class BinaryTreeNodeIterator<T> implements Iterator<T> {
 		return { done: false, value: result };
 	}
 }
+
+function* inOrderIterator<T>(root: BinaryTreeNode<T>):
+    IterableIterator<T> {
+    if (root.left) {
+        for (const value of inOrderIterator(root.left)) {
+            yield value;
+        }
+    }
+
+    yield root.value;
+
+    if (root.right) {
+        for (const value of inOrderIterator(root.right)) {
+            yield value;
+        }
+    }
+}
+
 */
+
