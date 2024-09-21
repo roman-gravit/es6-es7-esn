@@ -19,7 +19,7 @@ function searchDikstra(graph: Node,
 	const unvisited = new Set<string>(distances.keys());
 	while(unvisited.size > 0) {
 		const node = getNearestUnvisitedNode(distances, unvisited);
-		updateNodeNeighoursDistances(node, distances)
+		updateNodeNeighboursDistances(node, distances)
 		unvisited.delete(node);
 	}
 
@@ -30,7 +30,7 @@ function searchDikstra(graph: Node,
 	 * @param node 
 	 * @param distances 
 	 */
-	function updateNodeNeighoursDistances(node: string,
+	function updateNodeNeighboursDistances(node: string,
 										  distances: Map<string, number>,
 										  ) 
 	{
