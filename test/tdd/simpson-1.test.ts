@@ -1,5 +1,6 @@
 import { scheduleMeeting, Range, GetSecondFunction, slotMachine } from "../../src/tdd/simpson-1";
 
+
 describe('slotMachine', () => {
 	test('empty call', () => {
 		expect(slotMachine).not.toEqual(undefined);

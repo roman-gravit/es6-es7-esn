@@ -2,14 +2,14 @@ export { scheduleMeeting, Range, GetSecondFunction, slotMachine };
 
 ///// Task 3 /////
 interface Reel  {
-	position: null | number;
+	position: number;
 	symbols: string[];
 	spin(): void;
 	display(): string;
 }
 
 const reel: Reel = {
-	position: null,
+	position: 0,
 	symbols: [ "X", "Y", "Z", "W", "$", "*", "<", "@" ],
 
 	spin(): void {
