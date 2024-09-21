@@ -1,4 +1,4 @@
-import { searchDikstra, Node } from "../../src/tdd/dikstra-search"
+import { searchDikstra } from "../../src/tdd/dikstra-search"
 
 describe("searchDikstra",  () => {
 	
